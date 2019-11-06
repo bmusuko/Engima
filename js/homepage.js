@@ -29,7 +29,7 @@ function renderMovies(e) {
     poster.className = 'poster';
 
     let posterImage = document.createElement('img');
-    posterImage.src = e['poster'];
+    posterImage.src = 'http://image.tmdb.org/t/p/w500'+e['poster_path'];
 
     poster.appendChild(posterImage);
     contentPoster.appendChild(poster);
@@ -50,7 +50,7 @@ function renderMovies(e) {
 
     let ratingValue = document.createElement('span');
     ratingValue.className = 'rating-value';
-    ratingValue.innerHTML = e['rating'];
+    ratingValue.innerHTML = e['vote_average'];
 
     rating.appendChild(starIcon);
     rating.appendChild(ratingValue);
@@ -63,7 +63,7 @@ function renderMovies(e) {
     target.type = 'hidden';
     target.className = 'target-movie';
     target.name = 'target-movie';
-    target.value = e['movieID'];
+    target.value = e['id'];
 
     item.appendChild(target);
     container.appendChild(item);
@@ -71,11 +71,12 @@ function renderMovies(e) {
 
 function getMovies() {
     let request = new XMLHttpRequest();
-    request.open("POST", "php/movies.php", true);
+    request.open("GET", "https://api.themoviedb.org/3/movie/now_playing?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&page=1", true);
     request.send();
-
+    console.log('sini');
     request.onload = function() {
         let movie_list = JSON.parse(request.response)
+        movie_list = movie_list.results
         for (i = 0; i < movie_list.length; i++) {
             renderMovies(movie_list[i]);
         }
