@@ -111,7 +111,7 @@ function getSearchResult() {
 
     let params = "search=" + input;
     let request = new XMLHttpRequest();
-    request.open("GET", "php/searchFunction.php" + "?" + params, true);
+    request.open("GET", "https://api.themoviedb.org/3/search/movie?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&page=1&include_adult=no&query="+ input, true);
     request.send();
 
     request.onload = function () {
@@ -121,7 +121,7 @@ function getSearchResult() {
 
 function getData(request, page, input) {
     let data = JSON.parse(request.response);
-
+    data = data['results']
     document.getElementById("search-key").innerHTML = input;
     document.getElementById("search-result").innerHTML = data.length;
 
@@ -166,7 +166,7 @@ function renderMovies(e) {
 
     let posterImage = document.createElement('img');
     posterImage.className = 'posterImage';
-    posterImage.src = e['poster'];
+    posterImage.src = 'http://image.tmdb.org/t/p/w500'+e['poster_path'];
     posterImage.setAttribute('onclick', 'viewDetail2(this)');
 
     poster.appendChild(posterImage);
@@ -188,7 +188,7 @@ function renderMovies(e) {
 
     let ratingValue = document.createElement('label');
     ratingValue.className = 'rating';
-    ratingValue.innerHTML = e['rating'];
+    ratingValue.innerHTML = e['vote_average'];
 
     rating.appendChild(starIcon);
     rating.appendChild(ratingValue);
@@ -200,7 +200,7 @@ function renderMovies(e) {
 
     let desc = document.createElement('p');
     desc.className = 'desc';
-    desc.innerHTML = e['description'];
+    desc.innerHTML = e['overview'];
 
     description.appendChild(desc);
     movieInfo.appendChild(description)
@@ -228,7 +228,7 @@ function renderMovies(e) {
     target.type = 'hidden';
     target.className = 'target-movie';
     target.name = 'target-movie';
-    target.value = e['movieID'];
+    target.value = e['id'];
 
     item.appendChild(target);
     container.appendChild(item);

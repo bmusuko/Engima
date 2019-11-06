@@ -58,7 +58,7 @@ function renderTop(e) {
     poster.className = 'poster';
 
     let posterImg = document.createElement('img');
-    posterImg.src = e['poster'];
+    posterImg.src = 'http://image.tmdb.org/t/p/w500'+e['poster_path'];
 
     poster.appendChild(posterImg);
     itemTop.appendChild(poster);
@@ -72,14 +72,24 @@ function renderTop(e) {
 
     let genreDuration = document.createElement('label');
     genreDuration.className = 'genre-duration';
-    genreDuration.innerHTML = e['genre'];
+    let genres = ''
+    for (i = 0; i < e['genres'].length; i++) {
+        genres += e['genres'][i]['name'];
+        if(i !==  e['genres'].length-1){
+            genres += ', '
+        }
+    }
+    if(genres === ''){
+        genres = 'none';
+    }
+    genreDuration.innerHTML = genres;
 
     let separator = document.createElement('label');
     separator.innerHTML = ' | ';
 
     let duration = document.createElement('label');
     duration.className = 'duration';
-    duration.innerHTML = e['duration'] + ' mins';
+    duration.innerHTML = e['runtime'] + ' mins';
 
     genreDuration.appendChild(separator);
     genreDuration.appendChild(duration);
@@ -91,7 +101,7 @@ function renderTop(e) {
     let date = document.createElement('span');
     date.className = 'date';
 
-    date.innerHTML = convertDate(e['date']);
+    date.innerHTML = convertDate(e['release_date']);
     release.appendChild(date);
 
     let ratingContainer = document.createElement('div');
@@ -102,7 +112,7 @@ function renderTop(e) {
 
     let rating = document.createElement('label');
     rating.className = 'rating';
-    rating.innerHTML = e['rating'] + " ";
+    rating.innerHTML = e['vote_average'] + " ";
 
     let outTen = document.createElement('span');
     outTen.className = 'out-ten';
@@ -117,7 +127,7 @@ function renderTop(e) {
 
     let desc = document.createElement('p');
     desc.className = 'desc';
-    desc.innerHTML = e['description'];
+    desc.innerHTML = e['overview'];
 
     descContainer.appendChild(desc);
 
@@ -325,7 +335,7 @@ function renderReviewContainer(e) {
 function renderPage(e) {
     renderTop(e);
 
-    let params1 = "id=" + e['movieID'];
+    let params1 = "id=" + e['id'];
     let request1 = new XMLHttpRequest();
     request1.open("GET", "php/getMovieSchedule.php" + "?" + params1, true);
     request1.send();
@@ -335,7 +345,7 @@ function renderPage(e) {
         renderScheduleContainer(schedule);
     }
 
-    let params2 = "id=" + e['movieID'];
+    let params2 = "id=" + e['id'];
     let request2 = new XMLHttpRequest();
     request2.open("GET", "php/getMovieReview.php" + "?" + params2, true);
     request2.send();
@@ -353,7 +363,7 @@ function getMovie() {
 
     let params = "id=" + id;
     let request = new XMLHttpRequest();
-    request.open("GET", "php/movieDetail.php" + "?" + params, true);
+    request.open("GET", "https://api.themoviedb.org/3/movie/"+id+"?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US", true);
     request.send();
 
     request.onload = function() {
