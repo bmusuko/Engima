@@ -132,6 +132,14 @@ function renderSeatSummary(movieTitle, movieDate, movieTime, seatNum) {
     return seatSummary;
 }
 
+function setFilled(e) {
+    let id = "seat-" + e["seatNo"];
+    document.getElementById(id).setAttribute("value", 0);
+    document.getElementById(id).style.backgroundColor = '#cccccc';
+    document.getElementById(id).style.borderColor = '#8f8f8f';
+    document.getElementById(id).style.color = '#8f8f8f';
+}
+
 function getSeatInfo() {
     let url = new URL(window.location.href);
     let id = new URLSearchParams(url.search).get("movie");
@@ -146,15 +154,7 @@ function getSeatInfo() {
 
     request.onload = function() {
         let seats = JSON.parse(request.response);
-        for (i = 0; i < 30; i++) {
-            let id = "seat-" + seats[i]["seatNo"];
-            document.getElementById(id).setAttribute("value", seats[i]["filled"]);
-            if(seats[i]["filled"] == 0) {
-                document.getElementById(id).style.backgroundColor = '#cccccc';
-                document.getElementById(id).style.borderColor = '#8f8f8f';
-                document.getElementById(id).style.color = '#8f8f8f';
-            }
-        }
+        seats.forEach(setFilled);
     }
 }
 
@@ -215,28 +215,80 @@ function select(e) {
     }
 }
 
+function getPaymentInfo() {
+    //to be implemented
+    return null;
+    // document.getElementById('transaction-id').innerHTML = ;
+    // document.getElementById('virtual-num').innerHTML = ;
+}
+
 function payment() {
-    let url = new URL(window.location.href);
-    let id = new URLSearchParams(url.search).get("movie");
-    let date = new URLSearchParams(url.search).get("date");
-    let histDate = convertDateToFormat(date)
-    let time = new URLSearchParams(url.search).get("time");
-    let seat = document.getElementById('seat-saved').value;
-    console.log(seat);
+    // let url = new URL(window.location.href);
+    // let id = new URLSearchParams(url.search).get("movie");
+    // let date = new URLSearchParams(url.search).get("date");
+    // let histDate = convertDateToFormat(date)
+    // let time = new URLSearchParams(url.search).get("time");
+    // let seat = document.getElementById('seat-saved').value;
+    // console.log(seat);
 
-    let request = new XMLHttpRequest();
-    let params = "movie=" + id + "&date=" + histDate + "&time=" + time + "&seat=" + seat;
-    request.open("GET", "php/insertTransaction.php" + "?" + params, true);
-    request.send()
+    // let request = new XMLHttpRequest();
+    // let params = "movie=" + id + "&date=" + histDate + "&time=" + time + "&seat=" + seat;
+    // request.open("GET", "php/insertTransaction.php" + "?" + params, true);
+    // request.send()
 
-    request.onload = function() {
-        if (request.response.substr(-3) == '200'){
-            document.getElementById('modal').style.display = 'block';
-        } else {
-            alert("Payment failed");
-        }
-    }
+    // request.onload = function() {
+    //     if (request.response.substr(-3) == '200'){
+    //         document.getElementById('modal').style.display = 'block';
+    //     } else {
+    //         alert("Payment failed");
+    //     }
+    // }
+    document.getElementById('modal').style.display = 'block';
+    timer();
+}
+
+function timer() {
+    var tempDate = new Date().getTime();
+    var countDownDate = new Date(tempDate + 2*60000);
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+        // Get today's date and time
+        var now = new Date().getTime();
     
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+    
+        // Time calculations for minutes and seconds
+        var minutes = Math.floor((distance % 3600000) / 60000);
+        var seconds = Math.floor((distance % 60000) / 1000);
+    
+        // Output the result in an element with id="demo"
+        if (seconds < 10) {
+            var temp = '0' + seconds;
+            seconds = temp;
+        }
+        document.getElementById('countdown').innerHTML = minutes + ':' + seconds;
+    
+        // If the count down is over, write some text 
+        if (distance < 0) {
+            clearInterval(x);
+            payment_failed();
+        } else if (document.getElementById('payment-status').getAttribute('value') == 1) {
+            clearInterval(x);
+            changeModal();
+        }
+    }, 1000);
+}
+
+function payment_failed() {
+    document.getElementById('countdown').style.fontSize = '2rem';
+    document.getElementById('countdown').innerHTML = 'Payment failed';
+}
+
+function changeModal() {
+    document.getElementById('payment-modal-container').style.display='none';
+    document.getElementById('success-modal-container').style.display='block';
 }
 
 function close() {

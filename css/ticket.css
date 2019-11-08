@@ -158,7 +158,24 @@ img {
     z-index: 3;
 }
 
-.modal-content-container {
+.payment-modal-container {
+    background-color: white;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 1;
+    border-radius: 5px;
+    margin: 12% auto auto auto;
+    padding: 3% 3% 3% 3%;
+    font-weight: bold;
+    text-align: center;
+    min-width: 400px;
+    max-width: 25%;
+    height: auto;
+}
+
+.success-modal-container {
     background-color: white;
     display: flex;
     flex-wrap: wrap;
@@ -259,6 +276,43 @@ img {
     border: 1px solid rgb(165, 165, 165);
     border-radius: 3px;
     color: rgb(165, 165, 165);
+}
+
+#payment-modal {
+    display: flex;
+    direction: column;
+    text-align: center;
+    width: auto;
+}
+
+#payment-info {
+    border-right: 1px solid #bfbfbf;
+    font-size: 0.75rem;
+    padding-right: 20px;
+}
+
+#transaction-id {
+    color: rgb(0,193,236);
+    font-size: 1.5rem;
+}
+
+#virtual-num {
+    color: rgb(0,193,236);
+    font-size: 1.5rem;
+}
+
+#timer {
+    padding-left: 15px;
+}
+
+#countdown {
+    color: #d13838;
+    font-size: 4rem;
+    text-align: center;
+}
+
+#success-modal-container {
+    display: none;
 }
 
 .seat-number-container input {
