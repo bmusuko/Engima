@@ -146,6 +146,7 @@ function getSeatInfo() {
 
     request.onload = function() {
         let seats = JSON.parse(request.response);
+        console.log(seats);
         for (i = 0; i < 30; i++) {
             let id = "seat-" + seats[i]["seatNo"];
             document.getElementById(id).setAttribute("value", seats[i]["filled"]);
@@ -164,14 +165,17 @@ function getMovie() {
     let date = new URLSearchParams(url.search).get("date");
     let time = new URLSearchParams(url.search).get("time");
     let seats = new URLSearchParams(url.search).get("seats");
+    console.log('https://api.themoviedb.org/3/movie/"+id+"?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US');
 
     let params = "movie=" + id;
     let request = new XMLHttpRequest();
-    request.open("GET", "php/title.php" + "?" + params, true);
+    request.open("GET", "https://api.themoviedb.org/3/movie/"+id+"?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US", true);
     request.send()
-
     request.onload = function() {
-        let title = request.response;
+        let title = JSON.parse(request.response);
+        title = title['title']
+        console.log(title);
+        console.log('e');
         renderTicketInfoContainer(id, title, date, time);
     }
 }

@@ -2,6 +2,7 @@ function changeBackButton(e) {
     if (e == 0) {
         document.getElementById('back-button').style.color = '#a6a6a6';
         document.getElementById('back-button').style.borderColor = '#a6a6a6';
+        document.getElementById('back-button').style.cursor = 'default';
         document.getElementById('back-button').disabled = true;
     } else {
         document.getElementById('back-button').style.color = '#12abde';
@@ -14,6 +15,7 @@ function changeNextButton(e) {
     if (e == 0) {
         document.getElementById('next-button').style.color = '#a6a6a6';
         document.getElementById('next-button').style.borderColor = '#a6a6a6';
+        document.getElementById('next-button').style.cursor = 'default';
         document.getElementById('next-button').disabled = true;
     } else {
         document.getElementById('next-button').style.color = '#12abde';
@@ -27,7 +29,7 @@ function changePage(e) {
     let input = new URLSearchParams(url.search).get("search");
     let currentPage = new URLSearchParams(url.search).get("page");
 
-    if (currentPage == null) {
+    if (typeof currentPage === 'undefined') {
         currentPage = 1;
     }
 
@@ -40,14 +42,12 @@ function changePage(e) {
             changeBackButton(1);
         }
 
-        let pages = document.getElementsByClassName('page-button')
-        let totalPages = pages.length;
-        for (i = 0; i < totalPages; i++) {
+        let pages = document.getElementsByClassName('page-button');
+        for(let i = 0;i<pages.length;i++){
             pages[i].style.color = '#12abde';
             pages[i].style.borderColor = '#12abde';
         }
-
-        if (destinationPage == totalPages) {
+        if (destinationPage == pages.length) {
             changeNextButton(0);
         } else {
             changeNextButton(1);
@@ -66,7 +66,7 @@ function onePage(e) {
     let input = new URLSearchParams(url.search).get("search");
     let currentPage = new URLSearchParams(url.search).get("page");
 
-    if (currentPage == null) {
+    if (typeof currentPage === 'undefined') {
         currentPage = 1;
     }
 
@@ -80,13 +80,12 @@ function onePage(e) {
         }
 
         let pages = document.getElementsByClassName('page-button')
-        let totalPages = pages.length;
-        for (i = 0; i < totalPages; i++) {
+        for(let i = 0;i<pages.length;i++){
             pages[i].style.color = '#12abde';
             pages[i].style.borderColor = '#12abde';
         }
 
-        if (destinationPage == totalPages) {
+        if (destinationPage == pages.length) {
             changeNextButton(0);
         } else {
             changeNextButton(1);
@@ -111,7 +110,7 @@ function getSearchResult() {
 
     let params = "search=" + input;
     let request = new XMLHttpRequest();
-    request.open("GET", "https://api.themoviedb.org/3/search/movie?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&page=1&include_adult=no&query="+ input, true);
+    request.open("GET", `https://api.themoviedb.org/3/search/movie?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&page=${page}&query=${input}`, true);
     request.send();
 
     request.onload = function () {
@@ -120,27 +119,29 @@ function getSearchResult() {
 }
 
 function getData(request, page, input) {
-    let data = JSON.parse(request.response);
-    data = data['results']
-    document.getElementById("search-key").innerHTML = input;
-    document.getElementById("search-result").innerHTML = data.length;
-
-    lastPage = Math.ceil(data.length / 5);
-
-    if (page != lastPage) {
-        for (i = (5 * (page - 1)); i < (5 * page); i++) {
-            renderMovies(data[i]);
-        }
-    } else {
-        for (i = (5 * (page - 1)); i < data.length; i++) {
-            renderMovies(data[i]);
-        }
+    let url = new URL(window.location.href);
+    let currentPage = new URLSearchParams(url.search).get("page");
+    if (currentPage == null) {
+        currentPage = 1;
     }
+    console.log(currentPage);
+    let data = JSON.parse(request.response);
+    lastPage = data['total_pages']
 
-    renderPage(lastPage);
+    document.getElementById("search-key").innerHTML = input;
+    document.getElementById("search-result").innerHTML = data['total_results'];
+    
+    
+    data = data['results']
+    for (i = 0; i<data.length; i++) {
+        renderMovies(data[i]);
+    }
+    
+    let currentPageIdx = renderPage(lastPage,currentPage);
+    document.getElementsByClassName('page-button')[currentPageIdx].style.color = '#a6a6a6';
+    document.getElementsByClassName('page-button')[currentPageIdx].style.borderColor = '#a6a6a6';
+    document.getElementsByClassName('page-button')[currentPageIdx].style.cursor = 'default';
 
-    document.getElementsByClassName('page-button')[page - 1].style.color = '#a6a6a6';
-    document.getElementsByClassName('page-button')[page - 1].style.borderColor = '#a6a6a6';
 
     if (page == 1) {
         changeBackButton(0);
@@ -234,12 +235,10 @@ function renderMovies(e) {
     container.appendChild(item);
 }
 
-function renderPage(last) {
+function renderPage(last,currentPage) {
     let container = document.getElementsByClassName("grid-container")[0];
-
     let item = document.createElement('div');
     item.className = 'page-number';
-
     let back = document.createElement('button');
     back.id = 'back-button';
     back.setAttribute('onclick', 'onePage(-1)');
@@ -247,24 +246,21 @@ function renderPage(last) {
 
     item.appendChild(back);
 
-    let firstPage = document.createElement('button');
-    firstPage.className = 'page-button';
-    firstPage.setAttribute('num', 1);
-    firstPage.innerHTML = '1';
-    firstPage.setAttribute('onclick', 'changePage(this)');
-
-    item.appendChild(firstPage);
-
     let pages = document.createElement('span');
     pages.id = 'next-page';
-
-    for (i = 2; i <= last; i++) {
+    awal = Math.max(1,currentPage-2);
+    let page_count = currentPage-awal+1;
+    akhir = Math.min(last, (currentPage-page_count)+5);
+    page_count += akhir-currentPage;
+    if(awal !== 1 && page_count !== 5){
+        awal = Math.max(1,awal-(5-page_count))
+    }
+    for (i = awal; i <= akhir; i++) {
         let page = document.createElement('button');
         page.className = 'page-button';
         page.setAttribute('num', i);
         page.innerHTML = i;
         page.setAttribute('onclick', 'changePage(this)');
-
         item.appendChild(page);
     }
 
@@ -277,4 +273,5 @@ function renderPage(last) {
 
     item.appendChild(next);
     container.appendChild(item);
+    return (currentPage-awal); // index tengah
 }
