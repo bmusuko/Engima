@@ -73,3 +73,8 @@ input[type=text], input[type=email], input[type=password] {
 #register-text {
     font-size: 12px;
 }
+
+#error-msg {
+    color: red;
+    margin-top: 50px;
+}

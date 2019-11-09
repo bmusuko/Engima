@@ -146,7 +146,13 @@ img {
     margin-top: 30px;
 }
 
-.modal {
+.modal-content {
+    box-sizing: content-box;
+    height: inherit;
+    width: 100%;
+}
+
+#modal {
     position: fixed;
     display: none;
     left: 0;
@@ -158,9 +164,9 @@ img {
     z-index: 3;
 }
 
-.payment-modal-container {
+#payment-modal-container {
     background-color: white;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -171,11 +177,11 @@ img {
     font-weight: bold;
     text-align: center;
     min-width: 400px;
-    max-width: 25%;
+    max-width: 20%;
     height: auto;
 }
 
-.success-modal-container {
+#success-modal-container {
     background-color: white;
     display: flex;
     flex-wrap: wrap;
@@ -188,12 +194,6 @@ img {
     text-align: center;
     width: 20%;
     height: auto;
-}
-
-.modal-content {
-    box-sizing: content-box;
-    height: inherit;
-    width: 100%;
 }
 
 #title {

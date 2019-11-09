@@ -7,8 +7,9 @@ if ($_GET) {
     //Get movie ID
     $movieID = $_GET["id"];
 
-    $query = "SELECT username, userRate, userReview, profilePicture FROM transactions_history JOIN users USING (userID) WHERE (movieID = :movieID)
-    AND userReview IS NOT NULL";
+    $query = "SELECT username, userRating, userReview, profilePicture 
+    FROM review JOIN users USING (userID) JOIN schedule USING (scheduleID) 
+    WHERE (movieID = :movieID) AND userReview IS NOT NULL";
     $stmt = $db->prepare($query);
 
     $params = array(

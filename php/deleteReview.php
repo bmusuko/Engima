@@ -4,14 +4,14 @@
 require_once("config.php");
 
 //Get Transcation ID
-$transcationID = $_GET["id"];
+$scheduleID = $_GET["id"];
 
-$query = "UPDATE transactions_history SET userRate = NULL, userReview = NULL WHERE (transactionID = :transcationID)";
+$query = "UPDATE review SET userRating = NULL, userReview = NULL WHERE (scheduleID = :scheduleID)";
 
 $stmt = $db->prepare($query);
 
 $params = array(
-    ":transcationID" => $transcationID
+    ":scheduleID" => $scheduleID
 );
 
 $status = $stmt->execute($params);

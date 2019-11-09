@@ -19,6 +19,7 @@ if ($_POST) {
     $typeProfilePicture = $_FILES["profilePicture"]["type"];
     $tempProfilePicture = $_FILES["profilePicture"]["tmp_name"];
     $sizeProfilePicture = $_FILES["profilePicture"]["size"];
+    $bank = filter_input(INPUT_POST, 'bank-account', FILTER_SANITIZE_STRING);
     $token = password_hash($username, PASSWORD_DEFAULT);
 
     //Input data validation
@@ -54,14 +55,16 @@ if ($_POST) {
     }
 
     // Preparing checkQuery
-    $checkQuery = "SELECT * FROM users WHERE (username = :username) OR (email = :email) OR (phone = :phone) LIMIT 1";
+    $checkQuery = "SELECT * FROM users WHERE (username = :username) 
+    OR (email = :email) OR (phone = :phone) OR (bank_account = :bank) LIMIT 1";
     $stmt1 = $db->prepare($checkQuery);
 
     // Bind checkQuery parameters
     $params1 = array(
         ":username" => $username,
         ":email" => $email,
-        ":phone" => $phone
+        ":phone" => $phone,
+        ":bank" => $bank
     );
 
     // Execute checkQuery
@@ -85,11 +88,16 @@ if ($_POST) {
             echo 403;
             array_push($errors, "Phone number already exist");
         }
+
+        if ($result['bank_account'] === $bank) {
+            echo 404;
+            array_push($errors, "Bank account already exist");
+        }
     }
 
     if (count($errors) == 0) {
         // Preparing insertQuery
-        $insertQuery = "INSERT INTO users (username, email, phone, password, profilePicture, token) VALUES (:username, :email, :phone, :password, :profilePicture, :token)";
+        $insertQuery = "INSERT INTO users (username, email, phone, password, profilePicture, bank_account, token) VALUES (:username, :email, :phone, :password, :profilePicture, :bank, :token)";
         $stmt2 = $db->prepare($insertQuery);
 
         // Bind insertQuery parameters
@@ -99,6 +107,7 @@ if ($_POST) {
             ":phone" => $phone,
             ":password" => $password,
             ":profilePicture" => $profilePicture,
+            ":bank" => $bank,
             ":token" => $token
         );
 

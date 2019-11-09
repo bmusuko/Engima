@@ -8,6 +8,7 @@ if ($_POST) {
     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+    $bank = filter_input(INPUT_POST, 'bank-account', FILTER_SANITIZE_STRING);
 
     if (empty($username)) {
         $username = "";
@@ -21,15 +22,21 @@ if ($_POST) {
         $phone = "";
     }
 
+    if (empty($bank)) {
+        $bank = "";
+    }
+
     // Preparing checkQuery
-    $checkQuery = "SELECT * FROM users WHERE (username = :username) OR (email = :email) OR (phone = :phone) LIMIT 1";
+    $checkQuery = "SELECT * FROM users WHERE (username = :username) OR 
+    (email = :email) OR (phone = :phone) OR (bank_account = :bank) LIMIT 1";
     $stmt1 = $db->prepare($checkQuery);
 
     // Bind checkQuery parameters
     $params1 = array(
         ":username" => $username,
         ":email" => $email,
-        ":phone" => $phone
+        ":phone" => $phone,
+        ":bank" => $bank
     );
 
     // Execute checkQuery
@@ -49,6 +56,10 @@ if ($_POST) {
 
         if ($result['phone'] === $phone) {
             echo 403;
+        }
+
+        if ($result['bank_account'] === $bank) {
+            echo 404;
         }
     }
 }

@@ -79,7 +79,6 @@ input[type="file"] + label:hover {
 .profile-picture-container {
     display: flex;
     flex-direction: row;
-    margin-bottom: 15px
 }
 
 .container {

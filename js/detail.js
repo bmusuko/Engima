@@ -275,7 +275,7 @@ function renderReviewItem(e) {
 
     let ratingValueContainer = document.createElement('label');
     ratingValueContainer.className = 'rating-value-container';
-    ratingValueContainer.innerHTML = e['userRate'];
+    ratingValueContainer.innerHTML = e['userRating'];
 
     let outTen = document.createElement('span');
     outTen.className = 'rating-out-10';
@@ -361,7 +361,6 @@ function getMovie() {
     let url = new URL(window.location.href);
     let id = new URLSearchParams(url.search).get("movie");
 
-    // let params = "id=" + id;
     let request = new XMLHttpRequest();
     request.open("GET", "https://api.themoviedb.org/3/movie/"+id+"?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US", true);
     request.send();

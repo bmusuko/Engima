@@ -56,17 +56,14 @@ $params4 = array(
 
 $stmt4->execute($params4);
 
-$query5 = "INSERT INTO transactions_history (userID, movieID,
-historyDate, historyTime) VALUES (:userID,
-:movieID, :historyDate, :historyTime)";
+$query5 = "INSERT INTO review (scheduleID, userID)
+VALUES (:scheduleID, :userID)";
 
 $stmt5 = $db->prepare($query5);
 
 $params5 = array(
-    ":userID" => $userID,
-    ":movieID" => $movieID,
-    ":historyDate" => $date,
-    ":historyTime" => $time
+    ":scheduleID" => $scheduleID,
+    ":userID" => $userID
 );
 
 $status = $stmt5->execute($params5);

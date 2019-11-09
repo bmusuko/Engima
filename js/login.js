@@ -22,28 +22,32 @@ function login(e) {
 
     request.onload = function() {
         switch (request.response.substr(-3)) {
+            case '':
+                window.location.replace('homepage.html');
+                break;
+                
             case '200':
                 window.location.replace('homepage.html');
                 break;
 
             case '201':
-                alert('Login failed');
+                document.getElementById('error-msg').innerHTML = 'Login failed';
                 break;
 
             case '301':
-                alert('Wrong password');
+                document.getElementById('error-msg').innerHTML = 'Wrong password';
                 break;
 
             case '302':
-                alert('Username/email is not registered');
+                document.getElementById('error-msg').innerHTML = 'Username/email is not registered';
                 break;
 
             case '401':
-                alert('Username/email is empty');
+                document.getElementById('error-msg').innerHTML = 'Username/email is empty';
                 break;
 
             case '402':
-                alert('Password is empty');
+                document.getElementById('error-msg').innerHTML = 'Password is empty';
                 break;
         }
     }

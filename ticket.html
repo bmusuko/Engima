@@ -83,15 +83,14 @@
         </div>
 
         <div id="modal" class="modal">
-            <span onclick="close();"></span>
-            <div id="payment-modal-container" class="payment-modal-container">
+            <div id="payment-modal-container">
                 <div id="payment-modal" class="modal-content">
                     <div id="payment-info">
                         <p id="transaction-text">Transaction ID</p>
                         <span id="transaction-id">ID</span>
                         <p id="virtual-number">Virtual Account</p>
                         <span id="virtual-num">Number</span>
-                        <input type="hidden" id="payment-status" nme="payment-status" value=0>
+                        <input type="hidden" id="payment-status" name="payment-status" value=0>
                     </div>
                     <div id="timer">
                         <p>Please complete the payment in</p>
@@ -99,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <div id="success-modal-container" class="success-modal-container">
+            <div id="success-modal-container">
                 <div class="modal-content">
                     <p id="success">Payment Success!</p>
                     <p id="thanks">Thank you for purchasing! You can view your purchase now.</p>

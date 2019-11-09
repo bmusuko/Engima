@@ -62,7 +62,7 @@ function renderGridItem(e) {
     poster.className = 'poster';
 
     let posterImg = document.createElement('img');
-    posterImg.src = e['poster'];
+    posterImg.src = 'http://image.tmdb.org/t/p/w500'+e['poster_path'];
 
     poster.appendChild(posterImg);
     posterContent.appendChild(poster);
@@ -77,11 +77,11 @@ function renderGridItem(e) {
     title.className = 'title';
     title.innerHTML = e['title'];
 
-    let transactionID = document.createElement('input');
-    transactionID.type = 'hidden';
-    transactionID.id = 'transaction-id';
-    transactionID.name = 'transaction-id';
-    transactionID.value = e['transactionID'];
+    let scheduleID = document.createElement('input');
+    scheduleID.type = 'hidden';
+    scheduleID.id = 'schedule-id';
+    scheduleID.name = 'schedule-id';
+    scheduleID.value = e['scheduleID'];
 
     let schedule = document.createElement('div');
     schedule.className = 'schedule';
@@ -92,7 +92,7 @@ function renderGridItem(e) {
 
     let scheduleTime = document.createElement('span');
     scheduleTime.id = 'schedule-time';
-    scheduleTime.innerHTML = convertDate(e['historyDate']) + ' - ' + e['historyTime'];
+    scheduleTime.innerHTML = convertDate(e['scheduleDate']) + ' - ' + e['scheduleTime'];
 
     schedule.appendChild(scheduleText);
     schedule.appendChild(scheduleTime);
@@ -154,7 +154,7 @@ function renderGridItem(e) {
     history.appendChild(schedule);
     history.appendChild(reviewSubmit);
     history.appendChild(reviewButton);
-    history.appendChild(transactionID);
+    history.appendChild(scheduleID);
 
     infoContent.appendChild(history);
 
@@ -172,14 +172,16 @@ function renderHistory(e) {
 }
 
 function getHistory() {
-    let request = new XMLHttpRequest();
-    request.open("POST", "php/history.php", true);
-    request.send();
+    // let request = new XMLHttpRequest();
+    // request.open("POST", "php/reviewData.php", true);
+    // request.send();
 
-    request.onload = function() {
-        let list = JSON.parse(request.response);
-        renderHistory(list);
-    }
+    // request.onload = function() {
+    //     let list = JSON.parse(request.response);
+    //     renderHistory(list);
+    // }
+
+    //Dari masing-masing transaksi dari WS, cari scheduleID dan dapetin review yang berkaitan
 }
 
 function delReview(e) {

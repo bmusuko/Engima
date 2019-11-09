@@ -74,16 +74,32 @@ input[type="search"]::-webkit-search-results-decoration {
     min-height: 70px;
 }
 
-.content {
-    background-color: white;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding-top: 10%;
-    padding-left: 8%;
-    padding-bottom: 8%;
-    min-height: 100%;
-    height: auto;
-    z-index: 1;
+@media only screen and (min-width: 1280px) {
+    .content {
+        background-color: white;
+        margin-left: 10%;
+        margin-right: 10%;
+        padding-top: 10%;
+        padding-left: 8%;
+        padding-bottom: 8%;
+        min-height: 100%;
+        height: auto;
+        z-index: 1;
+    }
+}
+
+@media only screen and (max-width: 1279px) {
+    .content {
+        background-color: white;
+        margin-left: 10%;
+        margin-right: 10%;
+        padding-top: 15%;
+        padding-left: 8%;
+        padding-bottom: 8%;
+        min-height: 100%;
+        height: auto;
+        z-index: 1;
+    }
 }
 
 .search-bar {

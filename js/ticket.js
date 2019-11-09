@@ -73,13 +73,16 @@ function renderTicketInfoContainer(movieID, movieTitle, movieDate, movieTime) {
     ticketInfo.appendChild(title);
     ticketInfo.appendChild(date);
 
-    let errorMsg = document.createElement('span');
-    errorMsg.id = 'false-username-msg';
-    errorMsg.className = 'input-message';
+    let saveTitle = document.createElement('input');
+    saveTitle.type = 'hidden';
+    saveTitle.id = 'save-title';
+    saveTitle.className = 'save-title';
+    saveTitle.name = 'save-title';
+    saveTitle.value = movieTitle;
 
     ticketInfoContainer.appendChild(backIconContainer);
     ticketInfoContainer.appendChild(ticketInfo);
-    ticketInfoContainer.appendChild(errorMsg);
+    ticketInfoContainer.appendChild(saveTitle);
 }
 
 function renderSeatSummary(movieTitle, movieDate, movieTime, seatNum) {
@@ -163,16 +166,14 @@ function getMovie() {
     let id = new URLSearchParams(url.search).get("movie");
     let date = new URLSearchParams(url.search).get("date");
     let time = new URLSearchParams(url.search).get("time");
-    let seats = new URLSearchParams(url.search).get("seats");
 
-    let params = "movie=" + id;
     let request = new XMLHttpRequest();
-    request.open("GET", "php/title.php" + "?" + params, true);
+    request.open("GET", "https://api.themoviedb.org/3/movie/"+id+"?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US", true);
     request.send()
 
     request.onload = function() {
-        let title = request.response;
-        renderTicketInfoContainer(id, title, date, time);
+        let title = JSON.parse(request.response);
+        renderTicketInfoContainer(id, title['title'], date, time);
     }
 }
 
@@ -185,15 +186,9 @@ function select(e) {
     }
     if (e.getAttribute('value') == 1) {
         let url = new URL(window.location.href);
-        let id = new URLSearchParams(url.search).get("movie");
+        let title = document.getElementById('save-title').getAttribute('value');
         let date = new URLSearchParams(url.search).get("date");
         let time = new URLSearchParams(url.search).get("time");
-        let title = "";
-
-        let params = "movie=" + id;
-        let request = new XMLHttpRequest();
-        request.open("GET", "php/title.php" + "?" + params, true);
-        request.send()
 
         let seat = e.innerHTML;
         document.getElementById('seat-saved').value = seat;
@@ -207,11 +202,7 @@ function select(e) {
         document.getElementById('seat-not-selected').style.display = 'none';
         document.getElementById('seat-selected').style.display = 'default';
 
-
-        request.onload = function() {
-            title = request.response;
-            document.getElementById('seat-selected').replaceChild(renderSeatSummary(title, date, time, seat), document.getElementById('seat-summary'));
-        }
+        document.getElementById('seat-selected').replaceChild(renderSeatSummary(title, date, time, seat), document.getElementById('seat-summary'));
     }
 }
 
@@ -233,7 +224,7 @@ function payment() {
 
     // let request = new XMLHttpRequest();
     // let params = "movie=" + id + "&date=" + histDate + "&time=" + time + "&seat=" + seat;
-    // request.open("GET", "php/insertTransaction.php" + "?" + params, true);
+    // request.open("GET", "php/successBook.php" + "?" + params, true);
     // request.send()
 
     // request.onload = function() {
@@ -243,13 +234,14 @@ function payment() {
     //         alert("Payment failed");
     //     }
     // }
+    document.getElementById('payment-status').setAttribute('value', 0);
     document.getElementById('modal').style.display = 'block';
     timer();
 }
 
 function timer() {
     var tempDate = new Date().getTime();
-    var countDownDate = new Date(tempDate + 2*60000);
+    var countDownDate = new Date(tempDate + 0.1*60000);
 
     // Update the count down every 1 second
     var x = setInterval(function() {
@@ -276,23 +268,20 @@ function timer() {
             payment_failed();
         } else if (document.getElementById('payment-status').getAttribute('value') == 1) {
             clearInterval(x);
-            changeModal();
+            payment_success();
         }
     }, 1000);
 }
 
 function payment_failed() {
+    document.getElementById('payment-status').setAttribute('value', 2);
     document.getElementById('countdown').style.fontSize = '2rem';
     document.getElementById('countdown').innerHTML = 'Payment failed';
 }
 
-function changeModal() {
+function payment_success() {
     document.getElementById('payment-modal-container').style.display='none';
     document.getElementById('success-modal-container').style.display='block';
-}
-
-function close() {
-    document.getElementById('modal').style.display='none';
 }
 
 function goToTransaction() {
@@ -302,7 +291,7 @@ function goToTransaction() {
 let modal = document.getElementById('modal');
 
 window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target == modal && document.getElementById('payment-status').getAttribute('value') != 0) {
         modal.style.display = "none";
     }
 }

@@ -5,17 +5,17 @@ require_once("config.php");
 
 if ($_POST) {
     // Get input data
-	$transactionID = filter_input(INPUT_POST, 'transaction-id', FILTER_SANITIZE_STRING);
+	$scheduleID = filter_input(INPUT_POST, 'schedule-id', FILTER_SANITIZE_STRING);
 
 	// Preparing getUserReview
-    $getUserReview = "SELECT * FROM transactions_history WHERE
-    (transactionID = :transactionID)";
+    $getUserReview = "SELECT * FROM review WHERE
+    (scheduleID = :schedulenID)";
 
     $stmt = $db->prepare($getUserReview);
 
 	// Bind getUserReview parameters
     $params = array(
-        ":transactionID" => $transactionID
+        ":scheduleID" => $scheduleID
     );
 
 	// Execute getUserReview

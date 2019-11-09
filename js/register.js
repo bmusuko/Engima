@@ -63,7 +63,7 @@ function emailValidate() {
                     document.getElementById('email-input').style.borderColor = 'red';
                     document.getElementById('email-input').style.borderWidth = '1.5px';
                     document.getElementById('false-email-msg').style.color = 'red';
-                    document.getElementById('false-email-msg').innerHTML = 'Email already existed';
+                    document.getElementById('false-email-msg').innerHTML = 'Email already exists';
                     break;
 
                 default :
@@ -96,10 +96,10 @@ function phoneValidate() {
                     document.getElementById('phone-input').style.borderColor = 'red';
                     document.getElementById('phone-input').style.borderWidth = '1.5px';
                     document.getElementById('false-phone-msg').style.color = 'red';
-                    document.getElementById('false-phone-msg').innerHTML = 'Phone number already existed';
+                    document.getElementById('false-phone-msg').innerHTML = 'Phone number already exists';
                     break;
 
-                default :
+                default:
                     document.getElementById('phone-input').style.borderColor = 'green';
                     document.getElementById('phone-input').style.borderWidth = '1.5px';
                     document.getElementById('false-phone-msg').innerHTML = '';
@@ -136,6 +136,38 @@ function passValidate() {
 function getFileName() {
     let filename = document.getElementById('browser-button').files[0].name;
     document.getElementById('profile-picture-name').value = filename;
+}
+
+function bankValidate() {
+    let num = document.getElementById('bank-account').value;
+    if (!/^\d+$/.test(num)) {
+        document.getElementById('bank-account').style.borderColor = 'red';
+        document.getElementById('bank-account').style.borderWidth = '1.5px';
+        document.getElementById('false-bank-account-msg').style.color = 'red';
+        document.getElementById('false-bank-account-msg').innerHTML = 'Account number should only contain number';
+    } else {
+        let getData = new FormData(document.forms.registerForm);
+        let request = new XMLHttpRequest();
+        request.open("POST", "php/regValidation.php", true);
+        request.send(getData);
+
+        request.onload = function() {
+            switch (request.response.substr(-3)) {
+                case '404':
+                    document.getElementById('bank-account').style.borderColor = 'red';
+                    document.getElementById('bank-account').style.borderWidth = '1.5px';
+                    document.getElementById('false-bank-account-msg').style.color = 'red';
+                    document.getElementById('false-bank-account-msg').innerHTML = 'Account number already exists';
+                    break;
+
+                default :
+                    document.getElementById('bank-account').style.borderColor = 'green';
+                    document.getElementById('bank-account').style.borderWidth = '1.5px';
+                    document.getElementById('false-bank-account-msg').innerHTML = '';
+                    break;
+            }
+        }
+    }
 }
 
 function register(e) {
