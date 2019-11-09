@@ -69,15 +69,37 @@ function renderMovies(e) {
     container.appendChild(item);
 }
 
-function getMovies() {
-    let request = new XMLHttpRequest();
-    request.open("GET", "https://api.themoviedb.org/3/movie/now_playing?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&page=1", true);
-    request.send();
-    request.onload = function() {
-        let movie_list = JSON.parse(request.response)
-        movie_list = movie_list.results
-        for (i = 0; i < movie_list.length; i++) {
-            renderMovies(movie_list[i]);
+  function getMovies() {
+    let now = new Date();
+    let week_ago = new Date();
+    week_ago.setDate(week_ago.getDate()-7);
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://api.themoviedb.org/3/movie/now_playing?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&page=1", true);
+    xhr.send();
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
+            let response = JSON.parse(xhr.response);
+            let total_pages = response.total_pages;
+            let request =[];
+            for(let i=1; i<=total_pages;i++){
+                request[i] = new XMLHttpRequest();
+                request[i].open("GET", `https://api.themoviedb.org/3/movie/now_playing?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&page=${i}`,true);
+                request[i].onreadystatechange = function() {
+                    if(request[i].readyState === XMLHttpRequest.DONE && request[i].status === 200){
+                        let response = JSON.parse(request[i].response)
+                        movie_list = response.results
+                        for (j = 0; j < movie_list.length; j++) {
+                            if(typeof(movie_list[j].release_date) !== undefined){
+                                let d = new Date(movie_list[j].release_date);
+                                if(d >= week_ago && d <= now){
+                                    renderMovies(movie_list[j]);
+                                }
+                            }
+                        }
+                    }
+                }
+                request[i].send();
+            }
         }
     }
 }
