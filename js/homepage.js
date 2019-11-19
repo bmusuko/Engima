@@ -91,7 +91,7 @@ function renderMovies(e) {
                         for (j = 0; j < movie_list.length; j++) {
                             if(typeof(movie_list[j].release_date) !== undefined){
                                 let d = new Date(movie_list[j].release_date);
-                                if(d >= week_ago && d <= now){
+                                if(d >= week_ago && d <= now && movie_list[j]['vote_average'] > 0){
                                     renderMovies(movie_list[j]);
                                 }
                             }

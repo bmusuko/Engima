@@ -27,7 +27,7 @@ try:
         now_playing = now_playing['results']
         array_film = []
         for film in now_playing:
-            array_film.append((film['id'],film['release_date']))
+            array_film.append((film['id'],film['release_date'],film['vote_average']))
 
         # print(array_film)
         array_min = [0,5]
@@ -45,7 +45,7 @@ try:
                 # print(i)
                 # release_date = None
                 release_date = datetime.datetime.strptime(i[1], '%Y-%m-%d')
-                if(release_date >= week_ago and release_date <= datetime.datetime.now()):
+                if(release_date >= week_ago and release_date <= datetime.datetime.now() and i[2]>0 ):
                     cursor.execute(f"SELECT DISTINCT movieID FROM `schedule` WHERE movieID = {i[0]};")
                     if (cursor.fetchone() == None):
                         print('bisa',i)

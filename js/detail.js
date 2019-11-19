@@ -72,16 +72,16 @@ function renderTop(e) {
 
     let genreDuration = document.createElement('label');
     genreDuration.className = 'genre-duration';
-    let genres = ''
-    for (i = 0; i < e['genres'].length; i++) {
-        genres += e['genres'][i]['name'];
-        if(i !==  e['genres'].length-1){
-            genres += ', '
+    let genres = 'Drama';
+    if(e['genres']){
+        genres = '';
+        for (i = 0; i < e['genres'].length; i++) {
+            genres += e['genres'][i]['name'];
+            if(i !==  e['genres'].length-1){
+                genres += ', '
+            }
         }
-    }
-    if(genres === ''){
-        genres = 'none';
-    }
+    } 
     genreDuration.innerHTML = genres;
 
     let separator = document.createElement('label');
@@ -89,7 +89,7 @@ function renderTop(e) {
 
     let duration = document.createElement('label');
     duration.className = 'duration';
-    duration.innerHTML = e['runtime'] + ' mins';
+    duration.innerHTML = e['runtime'] || '90' + ' mins';
 
     genreDuration.appendChild(separator);
     genreDuration.appendChild(duration);
