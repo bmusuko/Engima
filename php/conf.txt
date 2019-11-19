@@ -1,0 +1,24 @@
+api_key = 73d46027b91c9b97aad44eccdc904b85
+
+buat search movie 
+https://api.themoviedb.org/3/search/movie?api_key=<api_key>&language=en-US&page=1&include_adult=no&query=<query search>
+
+
+base url buat poster = 'http://image.tmdb.org/t/p/w500/' + poster_path
+
+
+home = 
+https://api.themoviedb.org/3/movie/now_playing?api_key=<api-key>&language=en-US&page=1
+
+movie detail 
+https://api.themoviedb.org/3/movie/548925?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US
+
+
+review = 
+https://api.themoviedb.org/3/movie/<id-movie>/reviews?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&page=1
+
+
+# database movie dibuang
+# showing dibuang
+
+cookie = %242y%2410%24ojxhJ77yEc5sx03GiOvPW.CQAWKKMaiMBRJoCtgHSegZs9lAMksmC
