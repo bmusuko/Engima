@@ -138,3 +138,8 @@ input[type="file"] + label:hover {
 #confirm-password:focus {
     outline: 0;
 }
+
+#error-alert {
+    color: red;
+    margin-top: 50px;
+}

@@ -24,7 +24,7 @@ function unameValidate() {
         request.send(getData);
 
         request.onload = function() {
-            switch (request.response.substr(-3)) {
+            switch (request.response) {
                 case '401':
                     let unameInput = document.getElementById('username-input').value;
                     document.getElementById('username-input').style.borderColor = 'red';
@@ -58,7 +58,7 @@ function emailValidate() {
         request.send(getData);
 
         request.onload = function() {
-            switch (request.response.substr(-3)) {
+            switch (request.response) {
                 case '402':
                     document.getElementById('email-input').style.borderColor = 'red';
                     document.getElementById('email-input').style.borderWidth = '1.5px';
@@ -91,7 +91,7 @@ function phoneValidate() {
         request.send(getData);
 
         request.onload = function() {
-            switch (request.response.substr(-3)) {
+            switch (request.response) {
                 case '403':
                     document.getElementById('phone-input').style.borderColor = 'red';
                     document.getElementById('phone-input').style.borderWidth = '1.5px';
@@ -152,7 +152,7 @@ function bankValidate() {
         request.send(getData);
 
         request.onload = function() {
-            switch (request.response.substr(-3)) {
+            switch (request.response) {
                 case '404':
                     document.getElementById('bank-account').style.borderColor = 'red';
                     document.getElementById('bank-account').style.borderWidth = '1.5px';
@@ -177,41 +177,44 @@ function register(e) {
     request.send(getData);
 
     request.onload = function() {
-        switch (request.response.substr(-3)) {
+        switch (request.response) {
             case '200':
                 window.location.replace('login.html');
                 break;
 
             case '201':
-                alert('Registration failed');
+                document.getElementById('error-alert').innerHTML = 'Registration failed';
                 break;
 
             case '301':
-                alert('Invalid username');
+                document.getElementById('error-alert').innerHTML = 'Invalid username';
                 break;
 
             case '302':
-                alert('Invalid phone number');
+                document.getElementById('error-alert').innerHTML = 'Invalid phone number';
                 break;
 
             case '303':
-                alert('Profile picture must not be be empty');
+                document.getElementById('error-alert').innerHTML = 'Profile picture must not be be empty';
+                break;
+
+            case '303501':
+                document.getElementById('error-alert').innerHTML = 'Profile picture must not be be empty';
                 break;
 
             case '304':
-                alert('File must not be more than 2 MB');
+                document.getElementById('error-alert').innerHTML = 'File must not be more than 2 MB';
                 break;
 
             case '305':
-                alert('Invalid file type');
+                document.getElementById('error-alert').innerHTML = 'Invalid file type';
                 break;
 
             case '501':
-                alert('Failed to upload profile picture');
+                document.getElementById('error-alert').innerHTML = 'Failed to upload profile picture';
                 break;
         }
     }
-
     e.preventDefault();
 }
 

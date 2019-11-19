@@ -26,24 +26,29 @@ if ($_POST) {
     if (!preg_match("/\w/", $username)) {
         echo 301;
         array_push($errors, "Username is invalid");
+        exit();
     }
 
     if ((strlen((string)$phone) < 9) or (strlen((string) $phone) > 12)) {
         echo 302;
         array_push($errors, "Phone number is invalid");
+        exit();
     }
 
     if (empty($nameProfilePicture)) {
         echo 303;
         array_push($errors, "Profile picture can't be empty");
+        exit();
     }
     else if ($sizeProfilePicture > 2000000) {
         echo 304;
         array_push($errors, "File can't be more than 2 MB");
+        exit();
     }
     else if (!in_array($typeProfilePicture, $fileType)) {
         echo 305;
         array_push($errors, "File type is invalid");
+        exit();
     }
 
     if (move_uploaded_file($tempProfilePicture, $directory . $nameProfilePicture)) {
@@ -52,6 +57,7 @@ if ($_POST) {
     else {
         echo 501;
         array_push($errors, "Failed to upload profile picture");
+        exit();
     }
 
     // Preparing checkQuery

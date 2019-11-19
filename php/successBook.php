@@ -70,7 +70,9 @@ $status = $stmt5->execute($params5);
 
 if ($status) {
     echo 200;
+    exit();
 } else {
     echo 400;
+    exit();
 }
 ?>

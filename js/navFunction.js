@@ -25,7 +25,7 @@ function logout() {
 	request.send();
 
 	request.onload = function () {
-		switch (request.response.substr(-3)) {
+		switch (request.response) {
 			case '200':
 				window.location.replace('login.html');
 				break;

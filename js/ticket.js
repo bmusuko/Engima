@@ -228,7 +228,7 @@ function payment() {
     // request.send()
 
     // request.onload = function() {
-    //     if (request.response.substr(-3) == '200'){
+    //     if (request.response == '200'){
     //         document.getElementById('modal').style.display = 'block';
     //     } else {
     //         alert("Payment failed");
@@ -241,7 +241,7 @@ function payment() {
 
 function timer() {
     var tempDate = new Date().getTime();
-    var countDownDate = new Date(tempDate + 0.1*60000);
+    var countDownDate = new Date(tempDate + 2*60000);
 
     // Update the count down every 1 second
     var x = setInterval(function() {

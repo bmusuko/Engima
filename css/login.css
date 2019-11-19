@@ -74,7 +74,7 @@ input[type=text], input[type=email], input[type=password] {
     font-size: 12px;
 }
 
-#error-msg {
+#error-alert {
     color: red;
     margin-top: 50px;
 }

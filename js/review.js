@@ -91,7 +91,7 @@ function addReview(e) {
     request.send(getData);
 
     request.onload = function () {
-        switch (request.response.substr(-3)) {
+        switch (request.response) {
             case '200':
                 alert('Submission success');
                 window.location.replace('transactions.html');

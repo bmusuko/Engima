@@ -24,7 +24,9 @@ if ($logoutStatus) {
     //Delete cookie
     setcookie($cookieName, "", time() - 86400, "/");
     echo 200;
+    exit();
 } else {
     echo 201;
+    exit();
 }
 ?>

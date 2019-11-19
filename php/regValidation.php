@@ -48,18 +48,22 @@ if ($_POST) {
     if ($result) {
         if ($result['username'] === $username) {
             echo 401;
+            exit();
         }
 
         if ($result['email'] === $email) {
             echo 402;
+            exit();
         }
 
         if ($result['phone'] === $phone) {
             echo 403;
+            exit();
         }
 
         if ($result['bank_account'] === $bank) {
             echo 404;
+            exit();
         }
     }
 }

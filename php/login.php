@@ -15,12 +15,14 @@ if ($_POST) {
     // Input data validation
     if (empty($username)) {
         echo 401;
-  	    array_push($errors, "Username/email is required");
+          array_push($errors, "Username/email is required");
+          exit();
     }
 
     if (empty($password)) {
         echo 402;
         array_push($errors, "Password is required");
+        exit();
     }
 
     if (count($errors) == 0) {
@@ -60,20 +62,24 @@ if ($_POST) {
                     // Go to homepage
                     if ($loginStatus) {
                         echo 200;
+                        exit();
                     }
                     else {
                         echo 201;
+                        exit();
                     }
                 }
             }
             else {
                 echo 301;
                 array_push($errors, "Wrong password");
+                exit();
             }
         }
         else {
             echo 302;
             array_push($errors, "Username/email is not registered");
+            exit();
         }
     }
 }

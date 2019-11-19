@@ -31,8 +31,10 @@ if ($_POST) {
 	// Go to transactions page
 	if ($updated) {
 		echo 200;
+		exit();
 	}
 	else {
 		echo 201;
+		exit();
 	}
 }
