@@ -1,0 +1,25 @@
+# default:
+#   before_script:
+#     - echo "install"
+#     - pwd
+#     - whoami
+
+stages:
+  # - lint
+  - deploy
+
+
+# lint:
+#     stage: lint
+#     script:
+#         - echo "install"
+#         - npm install
+#         - echo "run lint"
+#         - npm run lint
+
+deploy:
+    stage: deploy
+    script:
+        - sudo rm -rf /opt/lampp/htdocs/engima
+        - cd /opt/lampp/htdocs
+        - sudo git clone git@gitlab.informatika.org:if3110-2019-02-k02-12/engima.git
