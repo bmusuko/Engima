@@ -2,17 +2,10 @@
 -- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
-<<<<<<< HEAD
--- Host: 127.0.0.1
--- Generation Time: Nov 09, 2019 at 08:15 AM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.4
-=======
 -- Host: localhost
 -- Generation Time: Nov 10, 2019 at 12:53 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
->>>>>>> feature/homepage
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -79,9 +72,6 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`scheduleID`, `movieID`, `scheduleDate`, `scheduleTime`, `seat`) VALUES
-<<<<<<< HEAD
-(285, 475557, '2019-12-06', '10.00 AM', 26);
-=======
 (4978, 501170, '2019-11-09', '05.10 PM', 30),
 (4979, 501170, '2019-11-10', '03.50 AM', 30),
 (4980, 501170, '2019-11-10', '09.50 PM', 30),
@@ -672,7 +662,6 @@ INSERT INTO `schedule` (`scheduleID`, `movieID`, `scheduleDate`, `scheduleTime`,
 (5565, 646015, '2019-11-10', '08.30 PM', 30),
 (5566, 646015, '2019-11-10', '11.05 PM', 30),
 (5567, 646015, '2019-11-11', '04.25 AM', 30);
->>>>>>> feature/homepage
 
 -- --------------------------------------------------------
 
@@ -692,12 +681,6 @@ CREATE TABLE `seat` (
 --
 
 INSERT INTO `seat` (`seatID`, `scheduleID`, `seatNo`, `filled`) VALUES
-<<<<<<< HEAD
-(32, 285, 30, 0),
-(33, 285, 26, 0),
-(34, 285, 25, 0),
-(35, 285, 27, 0);
-=======
 (33933, 4978, 1, 1),
 (33934, 4978, 2, 1),
 (33935, 4978, 3, 1),
@@ -18433,7 +18416,6 @@ INSERT INTO `transactions_history` (`transactionID`, `userID`, `movieID`, `histo
 (6, 1, 291867, '2019-10-02', '02.00 PM', 8, 'Good movie'),
 (7, 1, 291867, '2019-10-02', '02.00 PM', 8, 'Good movie'),
 (8, 14, 291867, '2019-01-05', '02.00 PM', NULL, NULL);
->>>>>>> feature/homepage
 
 -- --------------------------------------------------------
 
@@ -18587,7 +18569,6 @@ ALTER TABLE `cookies`
   ADD CONSTRAINT `cookies_ibfk_1` FOREIGN KEY (`token`) REFERENCES `users` (`token`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
-<<<<<<< HEAD
 -- Constraints for table `review`
 --
 ALTER TABLE `review`
@@ -18595,14 +18576,10 @@ ALTER TABLE `review`
   ADD CONSTRAINT `review_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
-=======
->>>>>>> feature/homepage
 -- Constraints for table `seat`
 --
 ALTER TABLE `seat`
   ADD CONSTRAINT `scheduleID` FOREIGN KEY (`scheduleID`) REFERENCES `schedule` (`scheduleID`) ON DELETE CASCADE ON UPDATE CASCADE;
-<<<<<<< HEAD
-=======
 
 --
 -- Constraints for table `transactions_history`
@@ -18610,7 +18587,6 @@ ALTER TABLE `seat`
 ALTER TABLE `transactions_history`
   ADD CONSTRAINT `transactions_history_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `transactions_history_ibfk_2` FOREIGN KEY (`movieID`) REFERENCES `movies` (`movieID`) ON DELETE CASCADE ON UPDATE CASCADE;
->>>>>>> feature/homepage
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

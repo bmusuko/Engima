@@ -166,23 +166,13 @@ function getMovie() {
     let id = new URLSearchParams(url.search).get("movie");
     let date = new URLSearchParams(url.search).get("date");
     let time = new URLSearchParams(url.search).get("time");
-<<<<<<< HEAD
-
-=======
-    let seats = new URLSearchParams(url.search).get("seats");
-    let params = "movie=" + id;
->>>>>>> feature/homepage
     let request = new XMLHttpRequest();
     request.open("GET", "https://api.themoviedb.org/3/movie/"+id+"?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US", true);
     request.send()
     request.onload = function() {
         let title = JSON.parse(request.response);
-<<<<<<< HEAD
-        renderTicketInfoContainer(id, title['title'], date, time);
-=======
         title = title['title'];
         renderTicketInfoContainer(id, title, date, time);
->>>>>>> feature/homepage
     }
 }
 

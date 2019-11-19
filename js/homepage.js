@@ -69,17 +69,6 @@ function renderMovies(e) {
     container.appendChild(item);
 }
 
-<<<<<<< HEAD
-function getMovies() {
-    let request = new XMLHttpRequest();
-    request.open("GET", "https://api.themoviedb.org/3/movie/now_playing?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&page=1", true);
-    request.send();
-    request.onload = function() {
-        let movie_list = JSON.parse(request.response)
-        movie_list = movie_list.results
-        for (i = 0; i < movie_list.length; i++) {
-            renderMovies(movie_list[i]);
-=======
   function getMovies() {
     let now = new Date();
     let week_ago = new Date();
@@ -111,7 +100,6 @@ function getMovies() {
                 }
                 request[i].send();
             }
->>>>>>> feature/homepage
         }
     }
 }
