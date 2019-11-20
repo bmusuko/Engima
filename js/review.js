@@ -29,7 +29,7 @@ request.onload = function () {
 function changeImage(e) {
     let num = e.getAttribute('num');
 
-    for (i = 0; i <= num; i++) {
+    for (i = 0; i <= num; i += 1) {
         if (document.getElementById('star' + i).src.includes("star_icon.png")) {
         }
         else {
@@ -37,7 +37,7 @@ function changeImage(e) {
         }
     }
 
-    for (j = 9; j > num; j--) {
+    for (j = 9; j > num; j -= 1) {
         document.getElementById('star' + j).src = "assets/star_icon_grey.png";
     }
 
@@ -47,11 +47,11 @@ function changeImage(e) {
 function reset() {
     let num = document.getElementById('rating-star').value;
 
-    for (i = 0; i <= num; i++) {
+    for (i = 0; i <= num; i += 1) {
         document.getElementById('star' + i).src = "assets/star_icon.png";
     }
 
-    for (j = 9; j >= num; j--) {
+    for (j = 9; j >= num; j -= 1) {
         document.getElementById('star' + j).src = "assets/star_icon_grey.png";
     }
 
@@ -64,13 +64,13 @@ function setRating(e) {
     let ratingValue = Number(document.getElementById('rating-star').value);
 
     if (ratingSrc.includes("star_icon.png") && ((Number(num) + 1) == ratingValue)) {
-        for (i = 0; i <= 9; i++) {
+        for (i = 0; i <= 9; i += 1) {
             document.getElementById('star' + i).src = "assets/star_icon_grey.png";
         }
 
         document.getElementById('rating-star').value = 0;
     } else {
-        for (i = 0; i <= num; i++) {
+        for (i = 0; i <= num; i += 1) {
             document.getElementById('star' + i).src = "assets/star_icon.png";
         }
 

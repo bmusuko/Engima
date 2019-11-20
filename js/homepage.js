@@ -29,7 +29,7 @@ function renderMovies(e) {
     poster.className = 'poster';
 
     let posterImage = document.createElement('img');
-    posterImage.src = 'http://image.tmdb.org/t/p/w500'+e['poster_path'];
+    posterImage.src = 'http://image.tmdb.org/t/p/w500'+e.poster_path;
 
     poster.appendChild(posterImage);
     contentPoster.appendChild(poster);
@@ -40,7 +40,7 @@ function renderMovies(e) {
 
     let title = document.createElement('div');
     title.className = 'title';
-    title.innerHTML = e['title'];
+    title.innerHTML = e.title;
 
     let rating = document.createElement('div');
     rating.className = 'rating';
@@ -50,7 +50,7 @@ function renderMovies(e) {
 
     let ratingValue = document.createElement('span');
     ratingValue.className = 'rating-value';
-    ratingValue.innerHTML = e['vote_average'];
+    ratingValue.innerHTML = e.vote_average;
 
     rating.appendChild(starIcon);
     rating.appendChild(ratingValue);
@@ -63,7 +63,7 @@ function renderMovies(e) {
     target.type = 'hidden';
     target.className = 'target-movie';
     target.name = 'target-movie';
-    target.value = e['id'];
+    target.value = e.id;
 
     item.appendChild(target);
     container.appendChild(item);
@@ -81,17 +81,17 @@ function renderMovies(e) {
             let response = JSON.parse(xhr.response);
             let total_pages = response.total_pages;
             let request =[];
-            for(let i=1; i<=total_pages;i++){
+            for(let i=1; i<=total_pages;i += 1){
                 request[i] = new XMLHttpRequest();
                 request[i].open("GET", `https://api.themoviedb.org/3/movie/now_playing?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&page=${i}`,true);
                 request[i].onreadystatechange = function() {
                     if(request[i].readyState === XMLHttpRequest.DONE && request[i].status === 200){
                         let response = JSON.parse(request[i].response)
                         movie_list = response.results
-                        for (j = 0; j < movie_list.length; j++) {
+                        for (j = 0; j < movie_list.length; j += 1) {
                             if(typeof(movie_list[j].release_date) !== undefined){
                                 let d = new Date(movie_list[j].release_date);
-                                if(d >= week_ago && d <= now && movie_list[j]['vote_average'] > 0){
+                                if(d >= week_ago && d <= now && movie_list[j].vote_average > 0){
                                     renderMovies(movie_list[j]);
                                 }
                             }

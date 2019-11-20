@@ -5,7 +5,7 @@ from mysql.connector import Error
 
 
 try:
-    connection = mysql.connector.connect(host='localhost',
+    connection = mysql.connector.connect(host='127.0.0.1',
                                          database='engi_cinema',
                                          user='root',
                                          password='')

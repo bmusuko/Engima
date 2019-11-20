@@ -43,7 +43,7 @@ function changePage(e) {
         }
 
         let pages = document.getElementsByClassName('page-button');
-        for(let i = 0;i<pages.length;i++){
+        for(let i = 0;i<pages.length;i += 1){
             pages[i].style.color = '#12abde';
             pages[i].style.borderColor = '#12abde';
         }
@@ -80,7 +80,7 @@ function onePage(e) {
         }
 
         let pages = document.getElementsByClassName('page-button')
-        for(let i = 0;i<pages.length;i++){
+        for(let i = 0;i<pages.length;i += 1){
             pages[i].style.color = '#12abde';
             pages[i].style.borderColor = '#12abde';
         }
@@ -126,14 +126,14 @@ function getData(request, page, input) {
     }
     console.log(currentPage);
     let data = JSON.parse(request.response);
-    lastPage = data['total_pages']
+    lastPage = data.total_pages
 
     document.getElementById("search-key").innerHTML = input;
-    document.getElementById("search-result").innerHTML = data['total_results'];
+    document.getElementById("search-result").innerHTML = data.total_results;
     
     
-    data = data['results']
-    for (i = 0; i<data.length; i++) {
+    data = data.results
+    for (i = 0; i<data.length; i += 1) {
         renderMovies(data[i]);
     }
     
@@ -167,7 +167,7 @@ function renderMovies(e) {
 
     let posterImage = document.createElement('img');
     posterImage.className = 'posterImage';
-    posterImage.src = 'http://image.tmdb.org/t/p/w500'+e['poster_path'];
+    posterImage.src = 'http://image.tmdb.org/t/p/w500'+e.poster_path;
     posterImage.setAttribute('onclick', 'viewDetail2(this)');
 
     poster.appendChild(posterImage);
@@ -178,7 +178,7 @@ function renderMovies(e) {
 
     let title = document.createElement('label');
     title.className = 'title';
-    title.innerHTML = e['title'];
+    title.innerHTML = e.title;
     title.setAttribute('onclick', 'viewDetail2(this)');
 
     let rating = document.createElement('div');
@@ -189,7 +189,7 @@ function renderMovies(e) {
 
     let ratingValue = document.createElement('label');
     ratingValue.className = 'rating';
-    ratingValue.innerHTML = e['vote_average'];
+    ratingValue.innerHTML = e.vote_average;
 
     rating.appendChild(starIcon);
     rating.appendChild(ratingValue);
@@ -201,7 +201,7 @@ function renderMovies(e) {
 
     let desc = document.createElement('p');
     desc.className = 'desc';
-    desc.innerHTML = e['overview'];
+    desc.innerHTML = e.overview;
 
     description.appendChild(desc);
     movieInfo.appendChild(description)
@@ -229,7 +229,7 @@ function renderMovies(e) {
     target.type = 'hidden';
     target.className = 'target-movie';
     target.name = 'target-movie';
-    target.value = e['id'];
+    target.value = e.id;
 
     item.appendChild(target);
     container.appendChild(item);
@@ -255,7 +255,7 @@ function renderPage(last,currentPage) {
     if(awal !== 1 && page_count !== 5){
         awal = Math.max(1,awal-(5-page_count))
     }
-    for (i = awal; i <= akhir; i++) {
+    for (i = awal; i <= akhir; i += 1) {
         let page = document.createElement('button');
         page.className = 'page-button';
         page.setAttribute('num', i);

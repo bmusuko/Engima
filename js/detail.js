@@ -52,13 +52,13 @@ function convertDate(e) {
 }
 
 function renderTop(e) {
-    let itemTop = document.getElementsByClassName("grid-item-top")[0];;
+    let itemTop = document.getElementsByClassName("grid-item-top")[0];
 
     let poster = document.createElement('div');
     poster.className = 'poster';
 
     let posterImg = document.createElement('img');
-    posterImg.src = 'http://image.tmdb.org/t/p/w500'+e['poster_path'];
+    posterImg.src = 'http://image.tmdb.org/t/p/w500'+e.poster_path;
 
     poster.appendChild(posterImg);
     itemTop.appendChild(poster);
@@ -68,20 +68,20 @@ function renderTop(e) {
 
     let title = document.createElement('label');
     title.className = 'title';
-    title.innerHTML = e['title'];
+    title.innerHTML = e.title;
 
     let genreDuration = document.createElement('label');
     genreDuration.className = 'genre-duration';
     let genres = 'Drama';
-    if(e['genres']){
+    if(e.genres){
         genres = '';
-        for (i = 0; i < e['genres'].length; i++) {
-            genres += e['genres'][i]['name'];
-            if(i !==  e['genres'].length-1){
+        for (let i = 0; i < e.genres.length; i += 1) {
+            genres += e.genres[i].name;
+            if(i !==  e.genres.length-1){
                 genres += ', '
             }
         }
-    } 
+    }
     genreDuration.innerHTML = genres;
 
     let separator = document.createElement('label');
@@ -89,7 +89,7 @@ function renderTop(e) {
 
     let duration = document.createElement('label');
     duration.className = 'duration';
-    duration.innerHTML = e['runtime'] || '90' + ' mins';
+    duration.innerHTML = e.runtime || '90' + ' mins';
 
     genreDuration.appendChild(separator);
     genreDuration.appendChild(duration);
@@ -101,7 +101,7 @@ function renderTop(e) {
     let date = document.createElement('span');
     date.className = 'date';
 
-    date.innerHTML = convertDate(e['release_date']);
+    date.innerHTML = convertDate(e.release_date);
     release.appendChild(date);
 
     let ratingContainer = document.createElement('div');
@@ -112,7 +112,7 @@ function renderTop(e) {
 
     let rating = document.createElement('label');
     rating.className = 'rating';
-    rating.innerHTML = e['vote_average'] + " ";
+    rating.innerHTML = e.vote_average + " ";
 
     let outTen = document.createElement('span');
     outTen.className = 'out-ten';
@@ -127,7 +127,7 @@ function renderTop(e) {
 
     let desc = document.createElement('p');
     desc.className = 'desc';
-    desc.innerHTML = e['overview'];
+    desc.innerHTML = e.overview;
 
     descContainer.appendChild(desc);
 
@@ -146,18 +146,18 @@ function renderScheduleItemContent(e) {
 
     let date = document.createElement('div');
     date.className = 'schedule-item-date';
-    date.innerHTML = convertDate(e['scheduleDate']);
+    date.innerHTML = convertDate(e.scheduleDate);
 
     let time = document.createElement('div');
     time.className = 'schedule-item-time';
-    time.innerHTML = e['scheduleTime'];
+    time.innerHTML = e.scheduleTime;
 
     let seats = document.createElement('div');
     seats.className = 'schedule-item-seats';
 
     let seatsAvailable = document.createElement('span');
     seatsAvailable.className = 'seats-available';
-    seatsAvailable.innerHTML = e['seat'] + ' seats';
+    seatsAvailable.innerHTML = e.seat + ' seats';
 
     seats.appendChild(seatsAvailable);
 
@@ -166,7 +166,7 @@ function renderScheduleItemContent(e) {
 
     let available = document.createElement('label');
     available.className = 'available';
-    if (parseInt(e['seat'], 10) > 0) {
+    if (parseInt(e.seat, 10) > 0) {
         available.setAttribute('style', 'color: #12abde;');
         available.innerHTML = 'Book Now';
         status.setAttribute('onclick', 'book(this)');
@@ -177,7 +177,7 @@ function renderScheduleItemContent(e) {
 
     let availableIcon = document.createElement('img');
     availableIcon.className = 'available-icon';
-    if (parseInt(e['seat'], 10) > 0) {
+    if (parseInt(e.seat, 10) > 0) {
         availableIcon.src = 'assets/next_icon.png';
     } else {
         availableIcon.src = 'assets/unavailable_icon.png';
@@ -198,7 +198,7 @@ function renderScheduleItem(e) {
     let scheduleItem = document.createElement('div');
     scheduleItem.className = 'schedule-item';
 
-    for (i = 0; i < e.length; i++) {
+    for (i = 0; i < e.length; i += 1) {
         scheduleItem.append(renderScheduleItemContent(e[i]));
     }
 
@@ -255,7 +255,7 @@ function renderReviewItem(e) {
 
     let profilePic = document.createElement('img');
     profilePic.className = 'profile-pic';
-    profilePic.src = e['profilePicture'];
+    profilePic.src = e.profilePicture;
 
     profile.appendChild(profilePic);
 
@@ -264,7 +264,7 @@ function renderReviewItem(e) {
 
     let uname = document.createElement('label');
     uname.className = 'uname';
-    uname.innerHTML = e['username'];
+    uname.innerHTML = e.username;
 
     let userRating = document.createElement('div');
     userRating.className = 'user-rating';
@@ -275,7 +275,7 @@ function renderReviewItem(e) {
 
     let ratingValueContainer = document.createElement('label');
     ratingValueContainer.className = 'rating-value-container';
-    ratingValueContainer.innerHTML = e['userRating'];
+    ratingValueContainer.innerHTML = e.userRating;
 
     let outTen = document.createElement('span');
     outTen.className = 'rating-out-10';
@@ -291,7 +291,7 @@ function renderReviewItem(e) {
 
     let userReviewContent = document.createElement('p');
     userReviewContent.className = 'user-review-content';
-    userReviewContent.innerHTML = e['userReview']
+    userReviewContent.innerHTML = e.userReview
 
     userReviewContainer.appendChild(userReviewContent);
 
@@ -309,7 +309,7 @@ function renderReviewContent(e) {
     let reviewContent = document.createElement('div');
     reviewContent.className = 'review-content';
 
-    for (i = 0; i < e.length; i++) {
+    for (i = 0; i < e.length; i += 1) {
         reviewContent.append(renderReviewItem(e[i]));
     }
 
@@ -335,7 +335,7 @@ function renderReviewContainer(e) {
 function renderPage(e) {
     renderTop(e);
 
-    let params1 = "id=" + e['id'];
+    let params1 = "id=" + e.id;
     let request1 = new XMLHttpRequest();
     request1.open("GET", "php/getMovieSchedule.php" + "?" + params1, true);
     request1.send();
@@ -345,7 +345,7 @@ function renderPage(e) {
         renderScheduleContainer(schedule);
     }
 
-    let params2 = "id=" + e['id'];
+    let params2 = "id=" + e.id;
     let request2 = new XMLHttpRequest();
     request2.open("GET", "php/getMovieReview.php" + "?" + params2, true);
     request2.send();

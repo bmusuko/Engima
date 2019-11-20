@@ -62,7 +62,7 @@ function renderGridItem(e) {
     poster.className = 'poster';
 
     let posterImg = document.createElement('img');
-    posterImg.src = 'http://image.tmdb.org/t/p/w500'+e['poster_path'];
+    posterImg.src = 'http://image.tmdb.org/t/p/w500'+e.poster_path;
 
     poster.appendChild(posterImg);
     posterContent.appendChild(poster);
@@ -75,13 +75,13 @@ function renderGridItem(e) {
 
     let title = document.createElement('div');
     title.className = 'title';
-    title.innerHTML = e['title'];
+    title.innerHTML = e.title;
 
     let scheduleID = document.createElement('input');
     scheduleID.type = 'hidden';
     scheduleID.id = 'schedule-id';
     scheduleID.name = 'schedule-id';
-    scheduleID.value = e['scheduleID'];
+    scheduleID.value = e.scheduleID;
 
     let schedule = document.createElement('div');
     schedule.className = 'schedule';
@@ -92,7 +92,7 @@ function renderGridItem(e) {
 
     let scheduleTime = document.createElement('span');
     scheduleTime.id = 'schedule-time';
-    scheduleTime.innerHTML = convertDate(e['scheduleDate']) + ' - ' + e['scheduleTime'];
+    scheduleTime.innerHTML = convertDate(e.scheduleDate) + ' - ' + e.scheduleTime;
 
     schedule.appendChild(scheduleText);
     schedule.appendChild(scheduleTime);
@@ -119,14 +119,14 @@ function renderGridItem(e) {
     addReview.innerHTML = 'Add Review';
     addReview.setAttribute('onclick', 'addReview(this)');
 
-    let date = e['historyDate'] + ' 00:00';
+    let date = e.historyDate + ' 00:00';
     let showDate = new Date(date);
     let today = new Date();
     let temp = today.getFullYear() + '-' + (today.getMonth()+1) +
     '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes();
     let todayDate = new Date(temp);
 
-    if (e['userReview'] == null) {
+    if (e.userReview == null) {
         addReview.setAttribute('style', 'display: default;');
         addReview.setAttribute('style', 'background-color: #12abde;');
         addReview.setAttribute('style', 'background-color: #12abde;');
@@ -166,7 +166,7 @@ function renderGridItem(e) {
 
 function renderHistory(e) {
     let gridContainer = document.getElementsByClassName('grid-container')[0];
-    for (i = 0; i < e.length; i++) {
+    for (i = 0; i < e.length; i += 1) {
         gridContainer.appendChild(renderGridItem(e[i]));
     }
 }

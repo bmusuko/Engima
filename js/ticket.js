@@ -136,7 +136,7 @@ function renderSeatSummary(movieTitle, movieDate, movieTime, seatNum) {
 }
 
 function setFilled(e) {
-    let id = "seat-" + e["seatNo"];
+    let id = "seat-" + e.seatNo;
     document.getElementById(id).setAttribute("value", 0);
     document.getElementById(id).style.backgroundColor = '#cccccc';
     document.getElementById(id).style.borderColor = '#8f8f8f';
@@ -171,7 +171,7 @@ function getMovie() {
     request.send()
     request.onload = function() {
         let title = JSON.parse(request.response);
-        title = title['title'];
+        title = title.title;
         renderTicketInfoContainer(id, title, date, time);
     }
 }

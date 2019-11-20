@@ -5,17 +5,15 @@
 #     - whoami
 
 stages:
-  # - lint
+  - lint
   - deploy
 
 
-# lint:
-#     stage: lint
-#     script:
-#         - echo "install"
-#         - npm install
-#         - echo "run lint"
-#         - npm run lint
+lint:
+    stage: lint
+    script:
+        - echo "lint"
+        - phplint php/*.php
 
 deploy:
     stage: deploy
