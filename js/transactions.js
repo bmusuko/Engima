@@ -180,6 +180,29 @@ function getHistory() {
     //     let list = JSON.parse(request.response);
     //     renderHistory(list);
     // }
+    
+    console.log('bsbs');
+    let request = new XMLHttpRequest();
+    request.open("GET", "http://localhost:5000/getTransaksi/1", true);
+    request.send();
+
+    request.onload = function() {
+        let list = JSON.parse(request.response);
+        console.log(list);
+        renderHistory(list);
+    }
+
+    // const xhr = new XMLHttpRequest(),
+    // method = "GET",
+    // url = "http://localhost:5000/getTransaksi/1";
+
+    // xhr.open(method, url, true);
+    // xhr.onreadystatechange = function () {
+        // if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        //     console.log(xhr.responseText);
+        // }
+    // };
+    // xhr.send();
 
     //Dari masing-masing transaksi dari WS, cari scheduleID dan dapetin review yang berkaitan
 }
@@ -188,10 +211,10 @@ function delReview(e) {
     let parent = e.parentNode.parentNode;
     let id = parent.lastElementChild.value;
     let params = "id=" + id;
-    let request = new XMLHttpRequest();
+    let request1 = new XMLHttpRequest();
 
-    request.open("GET", "php/deleteReview.php" + "?" + params, true);
-    request.send();
+    request1.open("GET", "php/deleteReview.php" + "?" + params, true);
+    request1.send();
 
     location.reload();
 }
