@@ -107,7 +107,11 @@ function renderTop(e) {
     let ratingContainer = document.createElement('div');
     ratingContainer.className = 'rating-container';
 
+    let rating1 = document.createElement('div');
+    rating1.className = 'rating-1';
+
     let starIcon = document.createElement('img');
+    starIcon.classNamec = 'star-icon'
     starIcon.src = "assets/star_icon.png";
 
     let rating = document.createElement('label');
@@ -116,11 +120,33 @@ function renderTop(e) {
 
     let outTen = document.createElement('span');
     outTen.className = 'out-ten';
-    outTen.innerHTML = '/10';
+    outTen.innerHTML = '/10 (Rating IMDb)';
 
     rating.appendChild(outTen);
-    ratingContainer.appendChild(starIcon);
-    ratingContainer.appendChild(rating);
+    rating1.appendChild(starIcon);
+    rating1.appendChild(rating);
+
+    let rating2 = document.createElement('div');
+    rating2.className = 'rating-2';
+
+    let starIcon2 = document.createElement('img');
+    starIcon2.classNamec = 'star-icon-1'
+    starIcon2.src = "assets/star_icon.png";
+
+    let ratingVal2 = document.createElement('label');
+    ratingVal2.className = 'rating-val-2';
+    ratingVal2.innerHTML = e.rateval + " ";
+
+    let outTen2 = document.createElement('span');
+    outTen2.className = 'out-ten-2';
+    outTen2.innerHTML = '/10 (Rating Pengguna)';
+
+    ratingVal2.appendChild(outTen2);
+    rating2.appendChild(starIcon2);
+    rating2.appendChild(ratingVal2);
+
+    ratingContainer.appendChild(rating1);
+    ratingContainer.appendChild(rating2);
 
     let descContainer = document.createElement('div');
     descContainer.className = 'desc-container';
@@ -305,6 +331,16 @@ function renderReviewItem(e) {
     return reviewItem;
 }
 
+function renderRatingValue(e){
+    var sum = 0;
+
+    for (i = 0; i < e.length; i += 1) {
+        sum += Number(e[i].userRating);
+    }
+
+    return (sum/Number(e.length));
+}
+
 function renderReviewContent(e) {
     let reviewContent = document.createElement('div');
     reviewContent.className = 'review-content';
@@ -333,8 +369,6 @@ function renderReviewContainer(e) {
 }
 
 function renderPage(e) {
-    renderTop(e);
-
     let params1 = "id=" + e.id;
     let request1 = new XMLHttpRequest();
     request1.open("GET", "php/getMovieSchedule.php" + "?" + params1, true);
@@ -354,6 +388,14 @@ function renderPage(e) {
         let review = JSON.parse(request2.response);
         let reviewContent = renderReviewContent(review);
         renderReviewContainer(reviewContent);
+        if (review.length > 0){
+            var rate = renderRatingValue(review);
+        } else {
+            rate = 0;
+        }
+        var rateval = "rateval";
+        e[rateval] = rate;
+        renderTop(e);
     }
 }
 

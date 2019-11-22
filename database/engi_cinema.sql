@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2019 at 12:15 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.4
+-- Generation Time: Nov 22, 2019 at 01:47 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,6 +32,13 @@ CREATE TABLE `cookies` (
   `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `cookies`
+--
+
+INSERT INTO `cookies` (`token`) VALUES
+('$2y$10$PaD6D4My3XZQ6MP2ge0w/..2HHka1om6WPXCvCxyHlENhF1U61rBK');
+
 -- --------------------------------------------------------
 
 --
@@ -42,8 +49,16 @@ CREATE TABLE `review` (
   `scheduleID` int(15) NOT NULL,
   `userID` int(15) NOT NULL,
   `userRating` float DEFAULT NULL,
-  `userReview` text COLLATE utf8_unicode_ci
+  `userReview` text COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`scheduleID`, `userID`, `userRating`, `userReview`) VALUES
+(1, 1, 5, 'hahha'),
+(2, 2, 7, 'hello');
 
 -- --------------------------------------------------------
 
@@ -64,8 +79,8 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`scheduleID`, `movieID`, `scheduleDate`, `scheduleTime`, `seat`) VALUES
-(1, 458897, '2019-11-17', '09.20 AM', 30),
-(2, 458897, '2019-11-18', '07.40 AM', 30),
+(1, 330457, '2019-11-17', '09.20 AM', 30),
+(2, 330456, '2019-11-18', '07.40 AM', 30),
 (3, 458897, '2019-11-18', '12.35 PM', 30),
 (4, 458897, '2019-11-18', '07.20 PM', 30),
 (5, 458897, '2019-11-19', '12.25 AM', 30),

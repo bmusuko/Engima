@@ -55,6 +55,18 @@ img {
 
 .rating-container {
     display: grid;
+    grid-template-columns: 35% auto;
+    height: 30px;
+}
+
+.rating-1 {
+    display: grid;
+    grid-template-columns: 25px auto;
+    margin-top: 10px;
+}
+
+.rating-2 {
+    display: grid;
     grid-template-columns: 25px auto;
     margin-top: 10px;
 }
@@ -259,14 +271,36 @@ img {
     margin-top: 20px;
 }
 
+.star-icon {
+    width: 20px;
+}
+
+.star-icon-1 {
+    width: 20px;
+}
+
+
 .rating {
     margin-top: 5px;
-    margin-left: 8px;
+    margin-left: 3px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.rating-val-2 {
+    margin-top: 5px;
+    margin-left: 3px;
     font-size: 1.25rem;
     font-weight: bold;
 }
 
 .out-ten {
+    color: grey;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.out-ten-2 {
     color: grey;
     font-size: 1rem;
     font-weight: bold;
