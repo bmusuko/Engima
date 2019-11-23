@@ -85,5 +85,5 @@ if ($_GET) {
 		array_push($result, $data);
 	}
 
-	echo json_encode($result, JSON_INVALID_UTF8_IGNORE);
+	echo json_encode($result, 128);
 }

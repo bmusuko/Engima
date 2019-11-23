@@ -23,7 +23,7 @@ if ($_POST) {
 
     $review = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    echo json_encode($review, JSON_INVALID_UTF8_IGNORE);
+    echo json_encode($review, 128);
 }
 
 ?>

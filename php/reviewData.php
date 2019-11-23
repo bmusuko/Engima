@@ -49,7 +49,7 @@ if($transactions['status'] == true){
             'userReview' => $isUserReview
         ));
     }
-    echo json_encode($response, JSON_INVALID_UTF8_IGNORE);
+    echo json_encode($response, 128);
 } else{
     print_r(false);
 }

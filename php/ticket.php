@@ -25,6 +25,6 @@ $stmt->execute($params);
 
 $result = $stmt->fetchAll();
 
-echo json_encode($result, JSON_INVALID_UTF8_IGNORE);
+echo json_encode($result, 128);
 
 ?>
