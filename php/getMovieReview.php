@@ -9,7 +9,7 @@ if ($_GET) {
 
     $query = "SELECT username, userRating, userReview, profilePicture 
     FROM review JOIN users USING (userID) JOIN schedule USING (scheduleID) 
-    WHERE (movieID = :movieID) AND userReview IS NOT NULL";
+    WHERE (review.movieID = :movieID) AND userReview IS NOT NULL";
     $stmt = $db->prepare($query);
 
     $params = array(

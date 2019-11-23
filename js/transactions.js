@@ -126,7 +126,7 @@ function renderGridItem(e) {
     '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes();
     let todayDate = new Date(temp);
 
-    if (e.userReview == null) {
+    if (e.userReview == false) {
         addReview.setAttribute('style', 'display: default;');
         addReview.setAttribute('style', 'background-color: #12abde;');
         addReview.setAttribute('style', 'background-color: #12abde;');
@@ -167,6 +167,7 @@ function renderGridItem(e) {
 function renderHistory(e) {
     let gridContainer = document.getElementsByClassName('grid-container')[0];
     for (i = 0; i < e.length; i += 1) {
+        // console.log('masuk');
         gridContainer.appendChild(renderGridItem(e[i]));
     }
 }
@@ -181,9 +182,8 @@ function getHistory() {
     //     renderHistory(list);
     // }
     
-    console.log('bsbs');
     let request = new XMLHttpRequest();
-    request.open("GET", "http://localhost:5000/getTransaksi/1", true);
+    request.open("GET", "php/reviewData.php", true);
     request.send();
 
     request.onload = function() {

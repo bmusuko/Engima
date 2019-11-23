@@ -89,7 +89,7 @@ function renderTop(e) {
 
     let duration = document.createElement('label');
     duration.className = 'duration';
-    duration.innerHTML = e.runtime || '90' + ' mins';
+    duration.innerHTML = e.runtime ? e.runtime + ' mins' : '90' + ' mins';
 
     genreDuration.appendChild(separator);
     genreDuration.appendChild(duration);
