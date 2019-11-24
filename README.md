@@ -35,21 +35,21 @@ Halaman Bank Pro: 54.163.161.180:5000
 ## Screenshots
 
 ## Register
-![](screenshots/2/register.png)
+![register-img](screenshots/2/critic.PNG)
 <br>
 <br>
-![](screenshots/2/register-correct.png)
+![register-correct](screenshots/2/register-correct.PNG)
 <br>
 <br>
-![](screenshots/2/register-wronginput.png)
+![register-wrong](screenshots/2/register-wronginput.PNG)
 
 ## Film Detail
-![](screenshots/2/critic.png)
+![critic-img](screenshots/2/critic.PNG)
 <br>
 <br>
 
 ## Buy Ticket
-![](screenshots/2/timer.png)
+![timer-img](screenshots/2/timer.PNG)
 <br>
 <br>
 
@@ -90,11 +90,6 @@ Halaman Bank Pro: 54.163.161.180:5000
 4. Perubahan halaman home - 13517059
 5. Perubahan halaman buy ticket - 13517059
 6. Perubahan halaman transaction history - 13517089
-
-### Bonus
-1. Login via Google - 13517089
-2. Status pembayaran real time - 13517089
-3. Authentikasi web service bank - 13517059
 
 <p align="center">
     <b>
