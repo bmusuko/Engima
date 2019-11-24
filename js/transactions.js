@@ -119,6 +119,14 @@ function renderGridItem(e) {
     addReview.innerHTML = 'Add Review';
     addReview.setAttribute('onclick', 'addReview(this)');
 
+    let pendingStatus = document.createElement('button');
+    pendingStatus.className = 'pending-status';
+    pendingStatus.innerHTML = 'You need to pay this transaction';
+
+    let cancelStatus = document.createElement('button');
+    cancelStatus.className = 'cancel-status';
+    cancelStatus.innerHTML = 'Your transaction has been canceled';
+
     let date = e.historyDate + ' 00:00';
     let showDate = new Date(date);
     let today = new Date();
@@ -126,26 +134,48 @@ function renderGridItem(e) {
     '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes();
     let todayDate = new Date(temp);
 
-    if (e.userReview == false) {
-        addReview.setAttribute('style', 'display: default;');
-        addReview.setAttribute('style', 'background-color: #12abde;');
-        addReview.setAttribute('style', 'background-color: #12abde;');
+    if (e.status == '1'){
+        if (e.userReview == false) {
+            addReview.setAttribute('style', 'display: default;');
+            addReview.setAttribute('style', 'background-color: #12abde;');
+            addReview.setAttribute('style', 'background-color: #12abde;');
+            deleteReview.setAttribute('style', 'display: none;');
+            editReview.setAttribute('style', 'display: none;');
+        } else {
+            addReview.setAttribute('style', 'display: none;');
+            deleteReview.setAttribute('style', 'display: default;');
+            deleteReview.setAttribute('style', 'background-color: #e31212;');
+            editReview.setAttribute('style', 'display: default;');
+            editReview.setAttribute('style', 'background-color: #35b056;');
+        }
+        pendingStatus.setAttribute('style', 'display: none;');
+        cancelStatus.setAttribute('style', 'display: none;');
+    } else if (e.status == '0') {
+        addReview.setAttribute('style', 'display: none;');
         deleteReview.setAttribute('style', 'display: none;');
         editReview.setAttribute('style', 'display: none;');
+        pendingStatus.setAttribute('style', 'display: default;');
+        pendingStatus.setAttribute('style', 'background-color: #a1a1a1;');
+        cancelStatus.setAttribute('style', 'display: none;');
     } else {
         addReview.setAttribute('style', 'display: none;');
-        deleteReview.setAttribute('style', 'display: default;');
-        deleteReview.setAttribute('style', 'background-color: #e31212;');
-        editReview.setAttribute('style', 'display: default;');
-        editReview.setAttribute('style', 'background-color: #35b056;');
+        deleteReview.setAttribute('style', 'display: none;');
+        editReview.setAttribute('style', 'display: none;');
+        cancelStatus.setAttribute('style', 'display: default;');
+        cancelStatus.setAttribute('style', 'background-color: #a1a1a1;');
+        pendingStatus.setAttribute('style', 'display: none;');
     }
 
     if (todayDate < showDate) {
         addReview.setAttribute('style', 'display: none;');
         deleteReview.setAttribute('style', 'display: none;');
         editReview.setAttribute('style', 'display: none;');
+        pendingStatus.setAttribute('style', 'display: none;');
+        cancelStatus.setAttribute('style', 'display: none;');
     }
 
+    reviewButton.appendChild(cancelStatus);
+    reviewButton.appendChild(pendingStatus);
     reviewButton.appendChild(deleteReview);
     reviewButton.appendChild(editReview);
     reviewButton.appendChild(addReview);
