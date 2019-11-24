@@ -22,8 +22,9 @@ request.onload = function () {
 
         if (data.userRating != null) {
             document.getElementById('rating-star').value = data.userRating;
+        } else{
+            method = "add"
         }
-        method = "add"
     }
     reset();
 }

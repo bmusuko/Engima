@@ -30,7 +30,7 @@ if ($_POST) {
 	if($method == 'edit'){
 		// Preparing updateQuery
 		$updateQuery = "UPDATE review SET userRating = :userRating, userReview = :userReview WHERE (scheduleID = :scheduleID) AND (userID = :userID)";
-		print($updateQuery);
+		// print($updateQuery);
 
 	} else if($method == 'add'){
 		$query = "SELECT movieID FROM `schedule` WHERE (scheduleID = ".$id_schedule.")";
@@ -39,7 +39,7 @@ if ($_POST) {
 		$scheduleinfo = $stmt->fetch(PDO::FETCH_ASSOC);
 		$updateQuery = "INSERT INTO review(`scheduleID`, `userID`, `movieID`, `userRating`, `userReview`) VALUES (:scheduleID,:userID,".$scheduleinfo['movieID'].",:userRating,:userReview)";
 	} else{
-		echo 'invalid method';
+		echo '201';
 		exit();
 	}
 	$stmt = $db->prepare($updateQuery);

@@ -29,6 +29,7 @@ aplikasi Bank yang digunakan untuk transaksi tiket film di Engima.
 
 Halaman Engima: 54.163.161.180/engima
 <br>
+<br>
 Halaman Bank Pro: 54.163.161.180:5000
 <br>
 
@@ -90,11 +91,6 @@ Halaman Bank Pro: 54.163.161.180:5000
 4. Perubahan halaman home - 13517059
 5. Perubahan halaman buy ticket - 13517059
 6. Perubahan halaman transaction history - 13517089
-
-### Bonus
-1. Login via Google - 13517089
-2. Status pembayaran real time - 13517089
-3. Authentikasi web service bank - 13517059
 
 <p align="center">
     <b>
