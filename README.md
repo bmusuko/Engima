@@ -36,21 +36,21 @@ Halaman Bank Pro: 54.163.161.180:5000
 ## Screenshots
 
 ## Register
-![](screenshots/2/register.png)
+![register-img](screenshots/2/critic.PNG)
 <br>
 <br>
-![](screenshots/2/register-correct.png)
+![register-correct](screenshots/2/register-correct.PNG)
 <br>
 <br>
-![](screenshots/2/register-wronginput.png)
+![register-wrong](screenshots/2/register-wronginput.PNG)
 
 ## Film Detail
-![](screenshots/2/critic.png)
+![critic-img](screenshots/2/critic.PNG)
 <br>
 <br>
 
 ## Buy Ticket
-![](screenshots/2/timer.png)
+![timer-img](screenshots/2/timer.PNG)
 <br>
 <br>
 
