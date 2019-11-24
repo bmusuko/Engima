@@ -125,6 +125,7 @@ function renderGridItem(e) {
 
     let cancelStatus = document.createElement('button');
     cancelStatus.className = 'cancel-status';
+    
     cancelStatus.innerHTML = 'Your transaction has been canceled';
 
     let date = e.historyDate + ' 00:00';
@@ -154,16 +155,18 @@ function renderGridItem(e) {
         addReview.setAttribute('style', 'display: none;');
         deleteReview.setAttribute('style', 'display: none;');
         editReview.setAttribute('style', 'display: none;');
+        cancelStatus.setAttribute('style', 'display: none;');
         pendingStatus.setAttribute('style', 'display: default;');
         pendingStatus.setAttribute('style', 'background-color: #a1a1a1;');
-        cancelStatus.setAttribute('style', 'display: none;');
+        pendingStatus.setAttribute('style', 'cursor: default;');
     } else {
         addReview.setAttribute('style', 'display: none;');
         deleteReview.setAttribute('style', 'display: none;');
         editReview.setAttribute('style', 'display: none;');
-        cancelStatus.setAttribute('style', 'display: default;');
-        cancelStatus.setAttribute('style', 'background-color: #a1a1a1;');
         pendingStatus.setAttribute('style', 'display: none;');
+        cancelStatus.setAttribute('style', 'display: default;');
+        cancelStatus.setAttribute('style', 'background-color: rgba(255,40,0,1);');
+        cancelStatus.setAttribute('style', 'cursor: default;');
     }
 
     if (todayDate < showDate) {
