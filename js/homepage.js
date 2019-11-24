@@ -78,7 +78,7 @@ function renderMovies(e) {
     week_ago = `${week_ago.getFullYear()}-${week_ago.getMonth()+1 % 12}-${week_ago.getDate()}`
     console.log(week_ago)
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", `https://api.themoviedb.org/3/discover/movie?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=${week_ago}&primary_release_date.lte=${now}&vote_count.gte=3`, true);
+    xhr.open("GET", `https://api.themoviedb.org/3/discover/movie?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.gte=${week_ago}&primary_release_date.lte=${now}&vote_count.gte=1`, true);
     xhr.send();
     xhr.onreadystatechange = function() {
         if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){

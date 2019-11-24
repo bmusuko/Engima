@@ -20,6 +20,6 @@ if ($_GET) {
 
     $data = $stmt->fetchall();
 
-    echo json_encode($data);
+    echo json_encode($data,128);
 }
 ?>

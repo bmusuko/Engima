@@ -89,7 +89,7 @@ function renderTop(e) {
 
     let duration = document.createElement('label');
     duration.className = 'duration';
-    duration.innerHTML = e.runtime || '90' + ' mins';
+    duration.innerHTML = e.runtime ? e.runtime + ' mins' : '90' + ' mins';
 
     genreDuration.appendChild(separator);
     genreDuration.appendChild(duration);
@@ -120,7 +120,7 @@ function renderTop(e) {
 
     let outTen = document.createElement('span');
     outTen.className = 'out-ten';
-    outTen.innerHTML = '/10 (Rating IMDb)';
+    outTen.innerHTML = '/10 (IMDb Rating)';
 
     rating.appendChild(outTen);
     rating1.appendChild(starIcon);
@@ -139,7 +139,7 @@ function renderTop(e) {
 
     let outTen2 = document.createElement('span');
     outTen2.className = 'out-ten-2';
-    outTen2.innerHTML = '/10 (Rating Pengguna)';
+    outTen2.innerHTML = '/10 (User Rating)';
 
     ratingVal2.appendChild(outTen2);
     rating2.appendChild(starIcon2);
