@@ -119,6 +119,15 @@ function renderGridItem(e) {
     addReview.innerHTML = 'Add Review';
     addReview.setAttribute('onclick', 'addReview(this)');
 
+    let pendingStatus = document.createElement('button');
+    pendingStatus.className = 'pending-status';
+    pendingStatus.innerHTML = 'You need to pay this transaction';
+
+    let cancelStatus = document.createElement('button');
+    cancelStatus.className = 'cancel-status';
+    
+    cancelStatus.innerHTML = 'Your transaction has been canceled';
+
     let date = e.historyDate + ' 00:00';
     let showDate = new Date(date);
     let today = new Date();
@@ -126,26 +135,50 @@ function renderGridItem(e) {
     '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes();
     let todayDate = new Date(temp);
 
-    if (e.userReview == null) {
-        addReview.setAttribute('style', 'display: default;');
-        addReview.setAttribute('style', 'background-color: #12abde;');
-        addReview.setAttribute('style', 'background-color: #12abde;');
+    if (e.status == '1'){
+        if (e.userReview == false) {
+            addReview.setAttribute('style', 'display: default;');
+            addReview.setAttribute('style', 'background-color: #12abde;');
+            addReview.setAttribute('style', 'background-color: #12abde;');
+            deleteReview.setAttribute('style', 'display: none;');
+            editReview.setAttribute('style', 'display: none;');
+        } else {
+            addReview.setAttribute('style', 'display: none;');
+            deleteReview.setAttribute('style', 'display: default;');
+            deleteReview.setAttribute('style', 'background-color: #e31212;');
+            editReview.setAttribute('style', 'display: default;');
+            editReview.setAttribute('style', 'background-color: #35b056;');
+        }
+        pendingStatus.setAttribute('style', 'display: none;');
+        cancelStatus.setAttribute('style', 'display: none;');
+    } else if (e.status == '0') {
+        addReview.setAttribute('style', 'display: none;');
         deleteReview.setAttribute('style', 'display: none;');
         editReview.setAttribute('style', 'display: none;');
+        cancelStatus.setAttribute('style', 'display: none;');
+        pendingStatus.setAttribute('style', 'display: default;');
+        pendingStatus.setAttribute('style', 'background-color: #a1a1a1;');
+        pendingStatus.setAttribute('style', 'cursor: default;');
     } else {
         addReview.setAttribute('style', 'display: none;');
-        deleteReview.setAttribute('style', 'display: default;');
-        deleteReview.setAttribute('style', 'background-color: #e31212;');
-        editReview.setAttribute('style', 'display: default;');
-        editReview.setAttribute('style', 'background-color: #35b056;');
+        deleteReview.setAttribute('style', 'display: none;');
+        editReview.setAttribute('style', 'display: none;');
+        pendingStatus.setAttribute('style', 'display: none;');
+        cancelStatus.setAttribute('style', 'display: default;');
+        cancelStatus.setAttribute('style', 'background-color: rgba(255,40,0,1);');
+        cancelStatus.setAttribute('style', 'cursor: default;');
     }
 
     if (todayDate < showDate) {
         addReview.setAttribute('style', 'display: none;');
         deleteReview.setAttribute('style', 'display: none;');
         editReview.setAttribute('style', 'display: none;');
+        pendingStatus.setAttribute('style', 'display: none;');
+        cancelStatus.setAttribute('style', 'display: none;');
     }
 
+    reviewButton.appendChild(cancelStatus);
+    reviewButton.appendChild(pendingStatus);
     reviewButton.appendChild(deleteReview);
     reviewButton.appendChild(editReview);
     reviewButton.appendChild(addReview);
@@ -167,6 +200,7 @@ function renderGridItem(e) {
 function renderHistory(e) {
     let gridContainer = document.getElementsByClassName('grid-container')[0];
     for (i = 0; i < e.length; i += 1) {
+        // console.log('masuk');
         gridContainer.appendChild(renderGridItem(e[i]));
     }
 }
@@ -180,6 +214,28 @@ function getHistory() {
     //     let list = JSON.parse(request.response);
     //     renderHistory(list);
     // }
+    
+    let request = new XMLHttpRequest();
+    request.open("GET", "php/reviewData.php", true);
+    request.send();
+
+    request.onload = function() {
+        let list = JSON.parse(request.response);
+        console.log(list);
+        renderHistory(list);
+    }
+
+    // const xhr = new XMLHttpRequest(),
+    // method = "GET",
+    // url = "http://localhost:5000/getTransaksi/1";
+
+    // xhr.open(method, url, true);
+    // xhr.onreadystatechange = function () {
+        // if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        //     console.log(xhr.responseText);
+        // }
+    // };
+    // xhr.send();
 
     //Dari masing-masing transaksi dari WS, cari scheduleID dan dapetin review yang berkaitan
 }
@@ -188,12 +244,17 @@ function delReview(e) {
     let parent = e.parentNode.parentNode;
     let id = parent.lastElementChild.value;
     let params = "id=" + id;
-    let request = new XMLHttpRequest();
-
-    request.open("GET", "php/deleteReview.php" + "?" + params, true);
-    request.send();
-
-    location.reload();
+    let request1 = new XMLHttpRequest();
+    request1.open("GET", "php/deleteReview.php" + "?" + params, true);
+    request1.send();
+    request1.onload = function () {
+        console.log('deleted');
+        if(request1.response == '200'){
+            window.location.reload(true);
+        } else{
+            alert('gagal delete');
+        }
+    }
 }
 
 function editReview(e) {
@@ -210,6 +271,5 @@ function addReview(e) {
     let title = parent.firstElementChild.innerHTML;
     let id = parent.lastElementChild.value;
     let params = "title=" + title + "&id=" + id;
-
     window.location.replace("review.html" + "?" + params);
 }
