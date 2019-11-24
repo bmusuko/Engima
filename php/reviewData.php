@@ -49,6 +49,7 @@ if($transactions['status'] == true){
             'userReview' => $isUserReview
         ));
     }
+    // echo '<script>console.log('.$response.')</script>';
     echo json_encode($response, 128);
 } else{
     print_r(false);

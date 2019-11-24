@@ -112,3 +112,11 @@ button {
 #schedule-time {
     margin-left: 2%;
 }
+
+.cancel-status {
+    background-color: #a1a1a1;
+}
+
+.pending-status {
+    background-color: #a1a1a1;
+}

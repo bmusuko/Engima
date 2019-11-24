@@ -55,7 +55,7 @@ img {
 
 .rating-container {
     display: grid;
-    grid-template-columns: 35% auto;
+    grid-template-columns: auto auto;
     height: 30px;
 }
 
