@@ -421,10 +421,10 @@ function goToTransaction() {
     window.location.replace('transactions.html');
 }
 
-let modal = document.getElementById('modal');
+// let modal = document.getElementById('modal');
 
-window.onclick = function(event) {
-    if (event.target == modal && document.getElementById('payment-status').getAttribute('value') != 0) {
-        modal.style.display = "none";
-    }
-}
+// window.onclick = function(event) {
+//     if (event.target == modal && document.getElementById('payment-status').getAttribute('value') != 0) {
+//         modal.style.display = "none";
+//     }
+// }
