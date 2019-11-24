@@ -55,6 +55,10 @@ Halaman Bank Pro: 54.163.161.180:5000
 <br>
 
 ## Transaction History
+![transaction-img](screenshots/2/transaction.PNG)
+<br>
+<br>
+![transaction2-img](screenshots/2/transaction-1.PNG)
 <br>
 
 ## Keterangan Tambahan
