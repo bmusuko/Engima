@@ -1,3 +1,51 @@
+function convertDateToFormat(e) {
+    let day = e.split(' ')[1];
+    let month = e.split(' ')[0];
+    let year = e.split(' ')[2];
+
+    switch (month) {
+        case "January":
+            month = '01';
+            break;
+        case "February":
+            month = '02';
+            break;
+        case "March":
+            month = '03';
+            break;
+        case "April":
+            month = '04';
+            break;
+        case "May":
+            month = '05';
+            break;
+        case "June":
+            month = '06';
+            break;
+        case "July":
+            month = '07';
+            break;
+        case "August":
+            month = '08';
+            break;
+        case "September":
+            month = '09';
+            break;
+        case "October":
+            month = '10';
+            break;
+        case "November":
+            month = '11';
+            break;
+        case "December":
+            month = '12';
+            break;
+    }
+
+    histDate = year + '-' + month + '-' + day;
+    return histDate;
+}
+
 function convertDate(e) {
     let tempDate = e.split('-');
     let month = tempDate[1];
@@ -421,9 +469,20 @@ function book(e) {
     children = parent.children;
 
     let date = children[0].innerHTML;
+    date = convertDateToFormat(date);
     let time = children[1].innerHTML;
-    let seats = children[2].firstElementChild.innerHTML.split(" ")[0];
-    let params = "movie=" + id + "&date=" + date + "&time=" + time + "&seats=" + seats;
 
-    window.location.replace('ticket.html' + "?" + params);
+    let params = "movie=" + id + "&date=" + date + "&time=" + time;
+    let request = new XMLHttpRequest();
+    request.open("GET", "php/getScheduleId.php" + "?" + params, true);
+    request.send()
+
+    let scheduleID = -1;
+
+    request.onload = function() {
+        scheduleID = JSON.parse(request.response);
+        let addParams = "scheduleID=" + scheduleID[0].scheduleID;
+
+        window.location.replace('ticket.html' + "?" + addParams);
+    }
 }

@@ -8,7 +8,7 @@
         <title>Buy Ticket</title>
     </head>
 
-    <body onload="getSeatInfo(); getMovie();">
+    <body onload="getMovieInfoFromSchedule();">
         <div class="navbar">
             <div class="navbar-wrapper">
                 <label class="navbar-button" id="navbar-title" onclick="location.href='homepage.html'"><span id="homepage-title">Engi</span>ma</label>
@@ -106,5 +106,8 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="movie-id" name="movie-id" value=0>
+        <input type="hidden" id="movie-date" name="movie-date" value=0>
+        <input type="hidden" id="movie-time" name="movie-time" value=0>
     </body>
 </html>

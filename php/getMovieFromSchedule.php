@@ -6,7 +6,8 @@ require_once("config.php");
 $scheduleID = $_GET["scheduleID"];
 
 // Get Seat Info
-$query = "SELECT seatNo FROM seat WHERE (scheduleID = :scheduleID);";
+$query = "SELECT movieID, scheduleDate, scheduleTime FROM schedule WHERE
+(scheduleID = :scheduleID)";
 
 $stmt = $db->prepare($query);
 

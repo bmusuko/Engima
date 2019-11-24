@@ -17,56 +17,28 @@ $stmt1->execute($params1);
 
 $userID = $stmt1->fetch(PDO::FETCH_ASSOC)["userID"];
 
-$movieID = $_GET["movie"];
-$date = $_GET["date"];
-$time = $_GET["time"];
-$seat = $_GET["seat"];
+$scheduleID = $_GET["scheduleID"];
+$seatNo = $_GET["seatNo"];
 
-$query2 = "SELECT scheduleID FROM schedule WHERE (movieID = :movieID)
-AND (scheduleDate = :scheduleDate) AND (scheduleTime = :scheduleTime)";
+$query2 = "INSERT INTO seat (scheduleID, seatNo)
+VALUES (:scheduleID, :seatNo)";
 $stmt2 = $db->prepare($query2);
 
 $params2 = array(
-    ":movieID" => $movieID,
-    ":scheduleDate" => $date,
-    ":scheduleTime" =>$time
+    ":scheduleID" => $scheduleID,
+    ":seatNo" => $seatNo
 );
 
 $stmt2->execute($params2);
 
-$scheduleID = $stmt2->fetch(PDO::FETCH_ASSOC)["scheduleID"];
-
-$query3 = "INSERT INTO seat (scheduleID, seatNo, filled)
-VALUES (:scheduleID, :seatNo, 0)";
+$query3 = "UPDATE schedule SET seat=seat - 1 WHERE (scheduleID = :scheduleID)";
 $stmt3 = $db->prepare($query3);
 
 $params3 = array(
-    ":scheduleID" => $scheduleID,
-    ":seatNo" => $seat
-);
-
-$stmt3->execute($params3);
-
-$query4 = "UPDATE schedule SET seat=seat - 1 WHERE (scheduleID = :scheduleID)";
-$stmt4 = $db->prepare($query4);
-
-$params4 = array(
     ":scheduleID" => $scheduleID
 );
 
-$stmt4->execute($params4);
-
-$query5 = "INSERT INTO review (scheduleID, userID)
-VALUES (:scheduleID, :userID)";
-
-$stmt5 = $db->prepare($query5);
-
-$params5 = array(
-    ":scheduleID" => $scheduleID,
-    ":userID" => $userID
-);
-
-$status = $stmt5->execute($params5);
+$status = $stmt3->execute($params3);
 
 if ($status) {
     echo 200;

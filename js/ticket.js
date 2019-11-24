@@ -1,52 +1,54 @@
-let baseURL = 'ec2-3-83-241-5.compute-1.amazonaws.com';
-let localURL = 'localhost';
-
-function convertDateToFormat(e) {
-    let day = e.split(' ')[1];
-    let month = e.split(' ')[0];
-    let year = e.split(' ')[2];
+function convertDate(e) {
+    let tempDate = e.split('-');
+    let month = tempDate[1];
+    let day = tempDate[2];
+    let year = tempDate[0];
 
     switch (month) {
-        case "January":
-            month = '01';
+        case '01':
+            month = 'January';
             break;
-        case "February":
-            month = '02';
+        case '02':
+            month = 'February';
             break;
-        case "March":
-            month = '03';
+        case '03':
+            month = 'March';
             break;
-        case "April":
-            month = '04';
+        case '04':
+            month = 'April';
             break;
-        case "May":
-            month = '05';
+        case '05':
+            month = 'May';
             break;
-        case "June":
-            month = '06';
+        case '06':
+            month = 'June';
             break;
-        case "July":
-            month = '07';
+        case '07':
+            month = 'July';
             break;
-        case "August":
-            month = '08';
+        case '08':
+            month = 'August';
             break;
-        case "September":
-            month = '09';
+        case '09':
+            month = 'September';
             break;
-        case "October":
-            month = '10';
+        case '10':
+            month = 'October';
             break;
-        case "November":
-            month = '1';
+        case '11':
+            month = 'November';
             break;
-        case "December":
-            month = '12';
+        case '12':
+            month = 'December';
             break;
     }
 
-    histDate = year + '-' + month + '-' + day;
-    return histDate;
+    if (day[0] == '0') {
+        day = day.substr(-1);
+    }
+
+    let date = month + " " + day + " " + year;
+    return date;
 }
 
 function renderTicketInfoContainer(movieID, movieTitle, movieDate, movieTime) {
@@ -78,9 +80,9 @@ function renderTicketInfoContainer(movieID, movieTitle, movieDate, movieTime) {
 
     let saveTitle = document.createElement('input');
     saveTitle.type = 'hidden';
-    saveTitle.id = 'save-title';
-    saveTitle.className = 'save-title';
-    saveTitle.name = 'save-title';
+    saveTitle.id = 'movie-title';
+    saveTitle.className = 'movie-title';
+    saveTitle.name = 'movie-title';
     saveTitle.value = movieTitle;
 
     ticketInfoContainer.appendChild(backIconContainer);
@@ -138,6 +140,31 @@ function renderSeatSummary(movieTitle, movieDate, movieTime, seatNum) {
     return seatSummary;
 }
 
+function setMovieInfoFromSchedule(id, date, time) {
+    document.getElementById('movie-id').setAttribute('value', id);
+    document.getElementById('movie-date').setAttribute('value', date);
+    document.getElementById('movie-time').setAttribute('value', time);
+}
+
+function getMovieInfoFromSchedule() {
+    let url = new URL(window.location.href);
+    let scheduleID = new URLSearchParams(url.search).get("scheduleID");
+    let params = "scheduleID=" + scheduleID;
+    let request = new XMLHttpRequest();
+    request.open("GET", "php/getMovieFromSchedule.php" + "?" + params, true);
+    request.send()
+
+    request.onload = function() {
+        let respond = JSON.parse(request.response);
+        let id = respond[0].movieID;
+        let date = respond[0].scheduleDate;
+        let time = respond[0].scheduleTime;
+        setMovieInfoFromSchedule(id, date, time);
+        getSeatInfo();
+        getMovie();
+    }
+}
+
 function setFilled(e) {
     let id = "seat-" + e.seatNo;
     document.getElementById(id).setAttribute("value", 0);
@@ -148,12 +175,9 @@ function setFilled(e) {
 
 function getSeatInfo() {
     let url = new URL(window.location.href);
-    let id = new URLSearchParams(url.search).get("movie");
-    let date = new URLSearchParams(url.search).get("date");
-    let histDate = convertDateToFormat(date);
-    let time = new URLSearchParams(url.search).get("time");
+    let id = new URLSearchParams(url.search).get("scheduleID");
 
-    let params = "movie=" + id + "&date=" + histDate + "&time=" + time;
+    let params = "scheduleID=" + id;
     let request = new XMLHttpRequest();
     request.open("GET", "php/ticket.php" + "?" + params, true);
     request.send()
@@ -165,10 +189,9 @@ function getSeatInfo() {
 }
 
 function getMovie() {
-    let url = new URL(window.location.href);
-    let id = new URLSearchParams(url.search).get("movie");
-    let date = new URLSearchParams(url.search).get("date");
-    let time = new URLSearchParams(url.search).get("time");
+    let id = document.getElementById('movie-id').getAttribute('value');
+    let date = convertDate(document.getElementById('movie-date').getAttribute('value'));
+    let time = document.getElementById('movie-time').getAttribute('value');
     let request = new XMLHttpRequest();
     request.open("GET", "https://api.themoviedb.org/3/movie/"+id+"?api_key=73d46027b91c9b97aad44eccdc904b85&language=en-US", true);
     request.send()
@@ -188,9 +211,9 @@ function select(e) {
     }
     if (e.getAttribute('value') == 1) {
         let url = new URL(window.location.href);
-        let title = document.getElementById('save-title').getAttribute('value');
-        let date = new URLSearchParams(url.search).get("date");
-        let time = new URLSearchParams(url.search).get("time");
+        let title = document.getElementById('movie-title').getAttribute('value');
+        let date = convertDate(document.getElementById('movie-date').getAttribute('value'));
+        let time = document.getElementById('movie-time').getAttribute('value');
 
         let seat = e.innerHTML;
         document.getElementById('seat-saved').value = seat;
@@ -209,13 +232,6 @@ function select(e) {
 }
 
 function getPaymentInfo() {
-    // let url = new URL(window.location.href);
-    // let id = new URLSearchParams(url.search).get('movie');
-    // let date = new URLSearchParams(url.search).get('date');
-    // let histDate = convertDateToFormat(date)
-    // let time = new URLSearchParams(url.search).get('time');
-    // let seat = document.getElementById('seat-saved').value;
-
     // GET VIRTUAL ACCOUNT
     let request = new XMLHttpRequest();
     request.open('POST', 'php/account.php', true);
@@ -225,7 +241,7 @@ function getPaymentInfo() {
         let acc = request.response;
         let soapRequest = new XMLHttpRequest();
         
-        soapRequest.open('POST', 'http://' + localURL + ':8080/ws-bank-1.0-SNAPSHOT/services/AccountService', true);
+        soapRequest.open('POST', 'http://localhost:8080/ws-bank-1.0-SNAPSHOT/services/AccountService', true);
         soapRequest.setRequestHeader('Content-Type', 'text/xml');
         let body = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.account.com/">
                         <soapenv:Header/>
@@ -241,26 +257,45 @@ function getPaymentInfo() {
             let xml = new DOMParser();
             xml = xml.parseFromString(soapRequest.response, 'text/xml');
             document.getElementById('virtual-num').innerHTML = xml.getElementsByTagName("return")[0].innerHTML;
+
+            //-------------------------------------------------------------------------------------------------------------
+            let url = new URL(window.location.href);
+            let scheduleID = new URLSearchParams(url.search).get("scheduleID");
+
+            let getUserID = new XMLHttpRequest();
+            getUserID.open('GET', 'php/userID.php', true);
+            getUserID.send();
+
+            getUserID.onload = function() {
+                let userID = getUserID.response;
+
+                let expressReq = new XMLHttpRequest();
+                let data = {
+                    "id_pengguna": userID,
+                    "id_schedule": scheduleID,
+                    "no_kursi": document.getElementById('seat-saved').getAttribute('value')
+                };
+
+                let expressBody = JSON.stringify(data);
+
+                expressReq.open('POST', 'http://localhost:5000/createTransaction/', true);
+                expressReq.setRequestHeader('Content-Type', 'application/json');
+                expressReq.send(expressBody);
+
+                expressReq.onload = function() {
+                    let respond = JSON.parse(expressReq.response);
+                    let respondData = JSON.parse(respond['data']);
+                    let len = respondData.length;
+                    if (respond['status']) {
+                        document.getElementById('transaction-id').innerHTML = respondData[len-1]['id_transaksi'];
+                        document.getElementById('payment-status').setAttribute('value', 0);
+                        document.getElementById('modal').style.display = 'block';
+                        timer();
+                    }
+                }
+            }
         }
     }
-    //-------------------------------------------------------------------------------------------------------------
-
-    // return res;
-    // let params = "movie=" + id + "&date=" + histDate + "&time=" + time + "&seat=" + seat;
-    // request.open("GET", "php/successBook.php" + "?" + params, true);
-    // request.send()
-
-    // request.onload = function() {
-    //     if (request.response == '200'){
-    //         document.getElementById('modal').style.display = 'block';
-    //     } else {
-    //         alert("Payment failed");
-    //     }
-    // }
-
-    document.getElementById('payment-status').setAttribute('value', 0);
-    document.getElementById('modal').style.display = 'block';
-    timer();   
 }
 
 function timer() {
@@ -273,7 +308,7 @@ function timer() {
     
     request.onload = function() {
         let acc = request.response;
-        let dest = document.getElementById('virtual-num');
+        let dest = document.getElementById('virtual-num').innerHTML;
         let amount = 45000;
 
         // Update the count down every 1 second
@@ -284,9 +319,15 @@ function timer() {
             // Find the distance between now and the count down date
             var distance = countDownDate - now;
 
+            // Time calculations for minutes and seconds
+            var minutes = Math.floor((distance % 3600000) / 60000);
+            var seconds = Math.floor((distance % 60000) / 1000);
+            
+            // var checkTime = (120 - (minutes * 60 + seconds)) / 60;
+
             if (distance % 5 == 0) {
                 let soapRequest = new XMLHttpRequest();
-                soapRequest.open('POST', 'http://' + localURL + ':8080/ws-bank-1.0-SNAPSHOT/services/TransactionService', true);
+                soapRequest.open('POST', 'http://localhost:8080/ws-bank-1.0-SNAPSHOT/services/TransactionService', true);
                 soapRequest.setRequestHeader('Content-Type', 'text/xml');
                 let body = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.transaction.com/">
                             <soapenv:Header/>
@@ -310,10 +351,6 @@ function timer() {
                     }
                 }
             }
-            
-            // Time calculations for minutes and seconds
-            var minutes = Math.floor((distance % 3600000) / 60000);
-            var seconds = Math.floor((distance % 60000) / 1000);
         
             // Output the result in an element with id="demo"
             if (seconds < 10) {
@@ -335,14 +372,49 @@ function timer() {
 }
 
 function payment_failed() {
-    document.getElementById('payment-status').setAttribute('value', 2);
-    document.getElementById('countdown').style.fontSize = '2rem';
-    document.getElementById('countdown').innerHTML = 'Payment failed';
+    let request = new XMLHttpRequest();
+
+    let body = 'status=2';
+    let id = document.getElementById('transaction-id').innerHTML;
+
+    request.open('POST', 'http://localhost:5000/changeStatus/' + id, true)
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.send(body);
+
+    request.onload = function() {
+        let respond = JSON.parse(request.response);
+        if (respond['status']) {
+            document.getElementById('payment-status').setAttribute('value', 2);
+            document.getElementById('countdown').style.fontSize = '2rem';
+            document.getElementById('countdown').innerHTML = 'Payment failed';
+        }
+    }
 }
 
 function payment_success() {
-    document.getElementById('payment-modal-container').style.display='none';
-    document.getElementById('success-modal-container').style.display='block';
+    let url = new URL(window.location.href);
+    let scheduleID = new URLSearchParams(url.search).get("scheduleID");
+    let succBook = new XMLHttpRequest();
+    bookParams = "scheduleID=" + scheduleID + "&seatNo=" + document.getElementById('seat-saved').getAttribute('value');
+    succBook.open("GET", "php/successBook.php" + "?" + bookParams, true);
+    succBook.send()
+
+    let request = new XMLHttpRequest();
+
+    let body = 'status=1';
+    let id = document.getElementById('transaction-id').innerHTML;
+
+    request.open('POST', 'http://localhost:5000/changeStatus/' + id, true)
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.send(body);
+
+    request.onload = function() {
+        let respond = JSON.parse(request.response);
+        if (respond['status']) {
+            document.getElementById('payment-modal-container').style.display='none';
+            document.getElementById('success-modal-container').style.display='block';
+        }
+    }
 }
 
 function goToTransaction() {
