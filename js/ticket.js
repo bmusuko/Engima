@@ -278,7 +278,7 @@ function getPaymentInfo() {
 
                 let expressBody = JSON.stringify(data);
 
-                expressReq.open('POST', 'http://localhost:3000/createTransaction/', true);
+                expressReq.open('POST', 'http://localhost:5000/createTransaction/', true);
                 expressReq.setRequestHeader('Content-Type', 'application/json');
                 expressReq.send(expressBody);
 
@@ -377,7 +377,7 @@ function payment_failed() {
     let body = 'status=2';
     let id = document.getElementById('transaction-id').innerHTML;
 
-    request.open('POST', 'http://localhost:3000/changeStatus/' + id, true)
+    request.open('POST', 'http://localhost:5000/changeStatus/' + id, true)
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.send(body);
 
@@ -404,7 +404,7 @@ function payment_success() {
     let body = 'status=1';
     let id = document.getElementById('transaction-id').innerHTML;
 
-    request.open('POST', 'http://localhost:3000/changeStatus/' + id, true)
+    request.open('POST', 'http://localhost:5000/changeStatus/' + id, true)
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.send(body);
 

@@ -25,20 +25,35 @@ mempermudah pekerjaannya. Melihat aplikasi web yang Anda kerjakan memuaskan, Eng
 meminta Anda untuk mengimplementasikan perubahan tersebut beserta web service dan
 aplikasi Bank yang digunakan untuk transaksi tiket film di Engima.
 
-## Requirement
+## Link Website
 
+Halaman Engima: 54.163.161.180/engima
 <br>
-
-## Cara Instalasi
-
-<br>
-
-## Cara Menjalankan Server
-
+Halaman Bank Pro: 54.163.161.180:5000
 <br>
 
 ## Screenshots
 
+## Register
+![](screenshots/2/register.png)
+<br>
+<br>
+![](screenshots/2/register-correct.png)
+<br>
+<br>
+![](screenshots/2/register-wronginput.png)
+
+## Film Detail
+![](screenshots/2/critic.png)
+<br>
+<br>
+
+## Buy Ticket
+![](screenshots/2/timer.png)
+<br>
+<br>
+
+## Transaction History
 <br>
 
 ## Keterangan Tambahan
