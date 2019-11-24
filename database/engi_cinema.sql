@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 23, 2019 at 02:31 PM
--- Server version: 10.1.30-MariaDB
--- PHP Version: 7.2.1
+-- Host: 127.0.0.1
+-- Generation Time: Nov 24, 2019 at 09:50 AM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -85,11 +85,11 @@ INSERT INTO `schedule` (`scheduleID`, `movieID`, `scheduleDate`, `scheduleTime`,
 (2, 330457, '2019-11-21', '10.40 AM', 30),
 (3, 330457, '2019-11-22', '11.30 AM', 30),
 (4, 330457, '2019-11-23', '04.35 PM', 30),
-(5, 330457, '2019-11-24', '03.25 PM', 30),
+(5, 330457, '2019-11-24', '03.25 PM', 20),
 (6, 611207, '2019-11-21', '02.45 PM', 30),
 (7, 611207, '2019-11-22', '09.20 PM', 30),
 (8, 611207, '2019-11-23', '11.55 PM', 30),
-(9, 611207, '2019-11-24', '06.15 PM', 30),
+(9, 611207, '2019-11-24', '06.15 PM', 29),
 (10, 611207, '2019-11-25', '02.50 PM', 30),
 (11, 501907, '2019-11-22', '11.15 PM', 30),
 (12, 501907, '2019-11-23', '04.10 PM', 30),
@@ -294,7 +294,7 @@ ALTER TABLE `schedule`
 -- AUTO_INCREMENT for table `seat`
 --
 ALTER TABLE `seat`
-  MODIFY `seatID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `seatID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
