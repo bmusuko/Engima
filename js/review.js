@@ -5,8 +5,10 @@ document.getElementById('title').innerHTML = title;
 document.getElementById('schedule-id').value = id;
 let getData = new FormData(document.forms.reviewForm);
 let request = new XMLHttpRequest();
-
-request.open("POST", "php/editReview.php", true);
+var method = "edit";
+const urlParams = new URLSearchParams(window.location.search);
+const scheduleID = urlParams.get('id');
+request.open("POST", "php/editReview.php?id_schedule="+scheduleID, true);
 request.send(getData);
 
 request.onload = function () {
@@ -18,11 +20,11 @@ request.onload = function () {
             document.getElementById('review-user').value = data.userReview;
         }
 
-        if (data.userRate != null) {
+        if (data.userRating != null) {
             document.getElementById('rating-star').value = data.userRating;
         }
+        method = "add"
     }
-
     reset();
 }
 
@@ -86,8 +88,9 @@ function setReview() {
 
 function addReview(e) {
     let getData = new FormData(document.forms.reviewForm);
+    console.log(getData);
     let request = new XMLHttpRequest();
-    request.open("POST", "php/review.php", true);
+    request.open("POST", "php/review.php?method="+method+"&id_schedule="+scheduleID, true);
     request.send(getData);
 
     request.onload = function () {

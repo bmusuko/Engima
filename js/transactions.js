@@ -212,11 +212,16 @@ function delReview(e) {
     let id = parent.lastElementChild.value;
     let params = "id=" + id;
     let request1 = new XMLHttpRequest();
-
     request1.open("GET", "php/deleteReview.php" + "?" + params, true);
     request1.send();
-
-    location.reload();
+    request1.onload = function () {
+        console.log('deleted');
+        if(request1.response == '200'){
+            window.location.reload(true);
+        } else{
+            alert('gagal delete');
+        }
+    }
 }
 
 function editReview(e) {
@@ -233,6 +238,5 @@ function addReview(e) {
     let title = parent.firstElementChild.innerHTML;
     let id = parent.lastElementChild.value;
     let params = "title=" + title + "&id=" + id;
-
     window.location.replace("review.html" + "?" + params);
 }
