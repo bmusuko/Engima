@@ -27,10 +27,10 @@ aplikasi Bank yang digunakan untuk transaksi tiket film di Engima.
 
 ## Link Website
 
-Halaman Engima: 54.163.161.180/engima
+Halaman Engima: 100.26.106.0/engima
 <br>
 <br>
-Halaman Bank Pro: 54.163.161.180:5000
+Halaman Bank Pro: 100.26.106.0:5000
 <br>
 
 ## Screenshots
@@ -95,6 +95,20 @@ Halaman Bank Pro: 54.163.161.180:5000
 4. Perubahan halaman home - 13517059
 5. Perubahan halaman buy ticket - 13517059
 6. Perubahan halaman transaction history - 13517089
+
+### Catatan Tambahan
+
+Di server-side, kami mengubah url localhost di kode menjadi url aws karena terdapat masalah dengan CORS.
+
+Untuk pengaksesan aplikasi, perlu digunakan extension yang dapat enable CORS seperti CORS everywhere di Mozilla Firefox
+
+### Hasil registrasi di engima tidak memasukkan account baru tersebut ke database ws bank sehingga perlu input manual.
+
+### Untuk akun tes gunakan: 
+username: bram_musuko
+<br>
+password: 123123
+<br>
 
 <p align="center">
     <b>
